@@ -2,23 +2,23 @@ package App.models;
 
 /**
  * Represents a replenishment request for a specific medicine.
- * 
+ * <p>
  * This class provides information about a request for replenishment of a medicine, including
  * the medicine name, quantity requested, and the current status of the request.
  */
 public class StockReplenishmentRequest extends BaseModel {
-    private String medicineName;
-    private int quantity;
-    private String status ;
+    private final String medicineName;
+    private final int quantity;
+    private String status;
 
     /**
      * Constructs a new StockReplenishmentRequest instance.
-     * 
+     *
      * @param medicineName The name of the medicine for which replenishment is requested.
-     * @param quantity The quantity of the medicine to be replenished.
-     * @param status The current status of the replenishment request (e.g., "pending", "approved").
+     * @param quantity     The quantity of the medicine to be replenished.
+     * @param status       The current status of the replenishment request (e.g., "pending", "approved").
      */
-    public StockReplenishmentRequest(String medicineName, int quantity , String status) {
+    public StockReplenishmentRequest(String medicineName, int quantity, String status) {
         super();
         this.medicineName = medicineName;
         this.quantity = quantity;
@@ -29,7 +29,7 @@ public class StockReplenishmentRequest extends BaseModel {
     /**
      * Returns a string representation of the replenishment request.
      * This implementation returns the medicine name and quantity in parentheses.
-     * 
+     *
      * @return The string representation of the replenishment request.
      */
     @Override
@@ -40,7 +40,7 @@ public class StockReplenishmentRequest extends BaseModel {
 
     /**
      * Gets the name of the medicine for which replenishment is requested.
-     * 
+     *
      * @return The name of the medicine.
      */
     public String getMedicineName() {
@@ -50,7 +50,7 @@ public class StockReplenishmentRequest extends BaseModel {
 
     /**
      * Gets the quantity of the medicine requested for replenishment.
-     * 
+     *
      * @return The quantity of the medicine.
      */
     public int getQuantity() {
@@ -58,10 +58,9 @@ public class StockReplenishmentRequest extends BaseModel {
     }
 
 
-
     /**
      * Gets the current status of the replenishment request.
-     * 
+     *
      * @return The current status of the request.
      */
     public String getStatus() {
@@ -71,11 +70,11 @@ public class StockReplenishmentRequest extends BaseModel {
 
     /**
      * Sets the status of the replenishment request.
-     * 
+     *
      * @param status The new status of the request.
      */
     public void setStatus(String status) {
         this.status = status;
-    }    
-    
+    }
+
 }

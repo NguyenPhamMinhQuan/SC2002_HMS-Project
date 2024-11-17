@@ -96,8 +96,7 @@ public class PatientSystem extends UserSystem {
             // Get all patients
             HashMap<String, User> patients = getAllPatients();
             for (User user : patients.values()) {
-                if (user instanceof Patient) {
-                    Patient patient = (Patient) user;
+                if (user instanceof Patient patient) {
                     writer.write(String.format("%s,%s,%s,%s,%s,%s,%s\n",
                             patient.getHospitalId(),
                             patient.getPassword(),

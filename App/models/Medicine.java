@@ -1,7 +1,7 @@
 package App.models;
 
 /**
- * Represents a Medicine record, which contains information about the medicine's 
+ * Represents a Medicine record, which contains information about the medicine's
  * name, current stock, and alert threshold for replenishment.
  */
 public class Medicine extends BaseModel {

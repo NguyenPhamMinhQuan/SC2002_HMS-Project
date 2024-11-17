@@ -71,8 +71,7 @@ public class AppointmentSystem extends RecordSystem {
 
     public Appointment getAppointmentByAppointmentIdentifyId(String appointmentIdentifyId) {
         for (BaseModel baseModel : getRecords().values()) {
-            if (baseModel instanceof Appointment) {
-                Appointment appointment = (Appointment) baseModel;
+            if (baseModel instanceof Appointment appointment) {
                 if (appointment.getAppointmentIdentifyId().equals(appointmentIdentifyId)) {
                     return appointment;
                 }
@@ -108,8 +107,7 @@ public class AppointmentSystem extends RecordSystem {
 
         // Iterate through all records and filter by patient ID and status
         for (BaseModel baseModel : getRecords().values()) {
-            if (baseModel instanceof Appointment) { // Check if it's an Appointment
-                Appointment appointment = (Appointment) baseModel;
+            if (baseModel instanceof Appointment appointment) { // Check if it's an Appointment
                 if (appointment.getpatientHospitalId().equals(patientHospitalId) && appointment.getStatus().equals(status)) {
                     patientAppointments.add(appointment); // Add matching appointment
                 }
@@ -131,8 +129,7 @@ public class AppointmentSystem extends RecordSystem {
 
         // Iterate through all records and filter by doctor ID and status
         for (BaseModel baseModel : getRecords().values()) {
-            if (baseModel instanceof Appointment) { // Check if it's an Appointment
-                Appointment appointment = (Appointment) baseModel;
+            if (baseModel instanceof Appointment appointment) { // Check if it's an Appointment
                 if (appointment.getdoctorHospitalId().equals(doctorHospitalId) && appointment.getStatus().equals(status)) {
                     doctorAppointments.add(appointment); // Add matching appointment
                 }
@@ -171,8 +168,7 @@ public class AppointmentSystem extends RecordSystem {
         List<Appointment> allAppointments = new ArrayList<>();
 
         for (BaseModel baseModel : getRecords().values()) {
-            if (baseModel instanceof Appointment) { // Check if it's an Appointment
-                Appointment appointment = (Appointment) baseModel;
+            if (baseModel instanceof Appointment appointment) { // Check if it's an Appointment
                 allAppointments.add(appointment); // Add matching appointment
             }
         }
@@ -203,8 +199,7 @@ public class AppointmentSystem extends RecordSystem {
 
         // Iterate through all records and filter by patient ID, doctor ID, and status
         for (BaseModel baseModel : getRecords().values()) {
-            if (baseModel instanceof Appointment) { // Check if it's an Appointment
-                Appointment appointment = (Appointment) baseModel;
+            if (baseModel instanceof Appointment appointment) { // Check if it's an Appointment
                 if (appointment.getpatientHospitalId().equals(patientHospitalId) &&
                         appointment.getdoctorHospitalId().equals(doctorHospitalId) &&
                         appointment.getStatus().equals(status)) {

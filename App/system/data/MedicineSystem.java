@@ -71,8 +71,7 @@ public class MedicineSystem extends RecordSystem {
      */
     public Medicine getMedicineByName(String medicineName) {
         for (BaseModel baseModel : getRecords().values()) {
-            if (baseModel instanceof Medicine) {
-                Medicine medicine = (Medicine) baseModel;
+            if (baseModel instanceof Medicine medicine) {
                 if (medicine.getMedicineName().equals(medicineName)) {
                     return medicine;
                 }

@@ -102,8 +102,7 @@ public class AppointmentOutcomeRecordSystem extends RecordSystem {
     public AppointmentOutcome getAppointmentOutcomeRecordById(String appointmentRecordId) {
         // Iterate through all records in the container
         for (BaseModel baseModel : getRecords().values()) {
-            if (baseModel instanceof AppointmentOutcome) {
-                AppointmentOutcome outcomeRecord = (AppointmentOutcome) baseModel;
+            if (baseModel instanceof AppointmentOutcome outcomeRecord) {
                 if (outcomeRecord.getAppointmentRecordId().equals(appointmentRecordId)) {
                     return outcomeRecord; // Return the matching baseModel
                 }
@@ -123,8 +122,7 @@ public class AppointmentOutcomeRecordSystem extends RecordSystem {
 
         // Iterate through all records in the container
         for (BaseModel baseModel : getRecords().values()) {
-            if (baseModel instanceof AppointmentOutcome) {
-                AppointmentOutcome outcomeRecord = (AppointmentOutcome) baseModel;
+            if (baseModel instanceof AppointmentOutcome outcomeRecord) {
                 if (outcomeRecord.getPatientHospitalId().equals(patientHospitalId)) {
                     outcomeRecords.add(outcomeRecord); // Add matching baseModel to the list
                 }
@@ -143,8 +141,7 @@ public class AppointmentOutcomeRecordSystem extends RecordSystem {
 
         // Iterate through all records in the container
         for (BaseModel baseModel : getRecords().values()) {
-            if (baseModel instanceof AppointmentOutcome) {
-                AppointmentOutcome outcomeRecord = (AppointmentOutcome) baseModel;
+            if (baseModel instanceof AppointmentOutcome outcomeRecord) {
                 outcomeRecords.add(outcomeRecord); // Add baseModel to the list
             }
         }

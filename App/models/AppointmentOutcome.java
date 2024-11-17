@@ -6,16 +6,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * Represents an appointment outcome record, which contains information about the 
+ * Represents an appointment outcome record, which contains information about the
  * outcome of an appointment, including consultation notes, service type, and prescriptions.
  */
 public class AppointmentOutcome extends BaseModel {
     private static final String prescriptions_list = "data/Prescriptions_List.csv";
 
-    private String appointmentRecordId;
+    private final String appointmentRecordId;
     private String serviceType;
-    private String patientHospitalId;
-    private String doctorHospitalId;
+    private final String patientHospitalId;
+    private final String doctorHospitalId;
     private final ArrayList<Prescription> prescriptions;
     private String consultationNotes;  // Changed to single String
 
@@ -36,7 +36,7 @@ public class AppointmentOutcome extends BaseModel {
         this.serviceType = serviceType;
         this.prescriptions = new ArrayList<>();
         this.consultationNotes = consultationNotes;
-        
+
         loadPrescriptions();
     }
 

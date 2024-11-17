@@ -45,8 +45,7 @@ public class RecordSystem implements System {
      * @param recordId The ID of the record to be removed.
      */
     public void removeRecord(int recordId) {
-        if (records.containsKey(recordId))
-            records.remove(recordId);
+        records.remove(recordId);
     }
 
     /**

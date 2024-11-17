@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * Represents the medical record of a patient, which contains information such as 
+ * Represents the medical record of a patient, which contains information such as
  * diagnoses and treatment plans. Medical records are loaded from a CSV file.
  */
 public class Medical extends BaseModel {
@@ -26,7 +26,7 @@ public class Medical extends BaseModel {
         this.patientHospitalId = patientHospitalId;
         this.treatments = new ArrayList<>();
         this.diagnoses = new ArrayList<>();
-        
+
         // Load data for this specific patientHospitalId
         loadMedicalRecordFromCSV(medicalRecordPath);
     }
@@ -40,16 +40,16 @@ public class Medical extends BaseModel {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             boolean isHeader = true;
-            
+
             while ((line = br.readLine()) != null) {
                 if (isHeader) {
                     isHeader = false; // Skip header line
                     continue;
                 }
-                
+
                 String[] fields = line.split(",");
                 String csvPatientHospitalId = fields[0].trim();
-                
+
                 // Check if this line corresponds to the current patient's ID
                 if (csvPatientHospitalId.equals(this.patientHospitalId)) {
                     // Parse diagnoses and treatments into lists
@@ -70,7 +70,7 @@ public class Medical extends BaseModel {
      */
     @Override
     public String toString() {
-        return "Patient"+patientHospitalId;
+        return "Patient" + patientHospitalId;
     }
 
     /**
@@ -109,8 +109,7 @@ public class Medical extends BaseModel {
     public void setTreatment(int index, String treatmentPlan) {
         if (index >= 0 && index < treatments.size()) {
             treatments.set(index, treatmentPlan);
-        }
-        else {
+        } else {
             System.out.println("Invalid index");
         }
     }
@@ -154,8 +153,7 @@ public class Medical extends BaseModel {
     public void setDiagnose(int index, String diagnose) {
         if (index >= 0 && index < diagnoses.size()) {
             diagnoses.set(index, diagnose);
-        }
-        else {
+        } else {
             System.out.println("Invalid index");
         }
     }

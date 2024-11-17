@@ -1,13 +1,13 @@
 package App.models;
 
 /**
- * Represents a prescription for a specific medicine with details including 
+ * Represents a prescription for a specific medicine with details including
  * medicine name, prescribed amount, and the status of the prescription.
  */
 public class Prescription extends BaseModel {
     private String medicine;
     private int amount;
-    private String status ;
+    private String status;
 
     /**
      * Constructs a Prescription record with the specified medicine name, amount, and status.

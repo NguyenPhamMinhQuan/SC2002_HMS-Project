@@ -16,31 +16,31 @@ import App.models.Prescription;
  * It allows pharmacists to manage appointment outcome records and medicine inventory.
  */
 public class PharmacistMenu extends Menu {
-    private String pharmacistHospitalId;
-    private AppointmentOutcomeRecordSystem appointmentOutcomeRecordContainer;
-    private MedicineSystem medicineContainer;
-    private ReplenishmentRequestSystem ReplenishmentRequestContainer;
+    private final String pharmacistHospitalId;
+    private final AppointmentOutcomeRecordSystem appointmentOutcomeRecordContainer;
+    private final MedicineSystem medicineContainer;
+    private final ReplenishmentRequestSystem ReplenishmentRequestContainer;
 
     /**
      * Constructor to create a new PharmacistMenu instance.
      *
-     * @param pharmacistHospitalId           The hospital ID of the pharmacist.
+     * @param pharmacistHospitalId              The hospital ID of the pharmacist.
      * @param appointmentOutcomeRecordContainer The container storing appointment outcome records.
-     * @param medicineContainer              The container storing medicine inventory data.
-     * @param ReplenishmentRequestContainer  The container storing replenishment requests.
+     * @param medicineContainer                 The container storing medicine inventory data.
+     * @param ReplenishmentRequestContainer     The container storing replenishment requests.
      */
-    public PharmacistMenu(String pharmacistHospitalId , AppointmentOutcomeRecordSystem appointmentOutcomeRecordContainer, MedicineSystem medicineContainer, ReplenishmentRequestSystem ReplenishmentRequestContainer) {
+    public PharmacistMenu(String pharmacistHospitalId, AppointmentOutcomeRecordSystem appointmentOutcomeRecordContainer, MedicineSystem medicineContainer, ReplenishmentRequestSystem ReplenishmentRequestContainer) {
         super();
-        this.pharmacistHospitalId=pharmacistHospitalId;
-        this.appointmentOutcomeRecordContainer=appointmentOutcomeRecordContainer;
-        this.medicineContainer=medicineContainer;
-        this.ReplenishmentRequestContainer=ReplenishmentRequestContainer;
+        this.pharmacistHospitalId = pharmacistHospitalId;
+        this.appointmentOutcomeRecordContainer = appointmentOutcomeRecordContainer;
+        this.medicineContainer = medicineContainer;
+        this.ReplenishmentRequestContainer = ReplenishmentRequestContainer;
     }
-    
+
     @Override
     public void run() {
 
-        Scanner sc=new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
         int choice;
         do {
             System.out.println("----------------------------------------");
@@ -48,20 +48,23 @@ public class PharmacistMenu extends Menu {
             System.out.println("0. Log out");
             System.out.println("1. Appointment Outcome Records");
             System.out.println("2. Medicine Inventory");
-            
+
             System.out.print("Enter your choice: ");
-            choice=sc.nextInt();
+            choice = sc.nextInt();
             switch (choice) {
                 case 0:
-                    System.out.println("Logging out..."); break;
+                    System.out.println("Logging out...");
+                    break;
                 case 1:
-                    appointmentOutcomeRecord(); break;
+                    appointmentOutcomeRecord();
+                    break;
                 case 2:
-                    medicineInventory(); break;
+                    medicineInventory();
+                    break;
                 default:
                     System.out.println("Invalid choice");
             }
-        } while (choice!=0);
+        } while (choice != 0);
     }
 
     /**
@@ -82,19 +85,19 @@ public class PharmacistMenu extends Menu {
         } else {
             for (int i = 0; i < records.size(); i++) {
                 AppointmentOutcome record = records.get(i);
-                System.out.printf("%-5d %-30s %-20s %-20s %-20s%n", 
-                    (i + 1), 
-                    record.getAppointmentRecordId(), 
-                    record.getServiceType(), 
-                    record.getPatientHospitalId(), 
-                    record.getDoctorHospitalId()
+                System.out.printf("%-5d %-30s %-20s %-20s %-20s%n",
+                        (i + 1),
+                        record.getAppointmentRecordId(),
+                        record.getServiceType(),
+                        record.getPatientHospitalId(),
+                        record.getDoctorHospitalId()
                 );
             }
 
             // Prompt to select a record by number
             System.out.println("----------------------------------------");
             System.out.print("Enter the number of the Appointment Outcome BaseModel to view prescriptions (or 0 to go back): ");
-            
+
             int choice;
             while (true) {
                 if (sc.hasNextInt()) {
@@ -130,17 +133,17 @@ public class PharmacistMenu extends Menu {
             } else {
                 for (int i = 0; i < prescriptions.size(); i++) {
                     Prescription prescription = prescriptions.get(i);
-                    System.out.printf("%-5d %-20s %-10d %-10s%n", 
-                        (i + 1), 
-                        prescription.getMedicine(), 
-                        prescription.getAmount(), 
-                        prescription.getStatus()
+                    System.out.printf("%-5d %-20s %-10d %-10s%n",
+                            (i + 1),
+                            prescription.getMedicine(),
+                            prescription.getAmount(),
+                            prescription.getStatus()
                     );
                 }
-                 // Prompt pharmacist to select a prescription to dispense
+                // Prompt pharmacist to select a prescription to dispense
                 System.out.println("----------------------------------------");
                 System.out.print("Enter the number of the Prescription to dispense (or 0 to go back): ");
-                
+
                 int prescriptionChoice;
                 while (true) {
                     if (sc.hasNextInt()) {
@@ -167,7 +170,7 @@ public class PharmacistMenu extends Menu {
                 Prescription selectedPrescription = prescriptions.get(prescriptionChoice - 1);
                 if (selectedPrescription.getStatus().equalsIgnoreCase("pending")) {
                     selectedPrescription.setStatus("dispensed");
-                    System.out.println("Prescription for " + selectedPrescription.getMedicine() + " has been dispensed "+ selectedPrescription.getAmount() +" amount.");
+                    System.out.println("Prescription for " + selectedPrescription.getMedicine() + " has been dispensed " + selectedPrescription.getAmount() + " amount.");
 
                     // Update the stock for the dispensed medicine
                     Medicine dispensedMedicine = medicineContainer.getMedicineByName(selectedPrescription.getMedicine());
@@ -186,20 +189,19 @@ public class PharmacistMenu extends Menu {
     }
 
 
-
     /**
      * Displays the medicine inventory and allows the pharmacist to request replenishment
      * of any medicine that is low in stock.
      */
     private void medicineInventory() {
         Scanner sc = new Scanner(System.in);
-    
+
         System.out.println("Medicine Inventory:");
         System.out.printf("%-5s %-20s %-15s %-15s %-15s%n", "No.", "Medicine Name", "Current Stock", "Alert Threshold", "Stock Level");
         System.out.println("--------------------------------------------------------------------------");
-    
+
         List<Medicine> medicines = medicineContainer.getAllMedicines();
-    
+
         if (medicines.isEmpty()) {
             System.out.println("No medicines in the inventory.");
         } else {
@@ -207,18 +209,18 @@ public class PharmacistMenu extends Menu {
                 Medicine medicine = medicines.get(i);
                 String stockLevel = (medicine.getCurrentStock() <= medicine.getAlertThreshold()) ? "low stock" : "normal";
                 System.out.printf("%-5d %-20s %-15d %-15d %-15s%n",
-                    (i + 1),
-                    medicine.getMedicineName(),
-                    medicine.getCurrentStock(),
-                    medicine.getAlertThreshold(),
-                    stockLevel
+                        (i + 1),
+                        medicine.getMedicineName(),
+                        medicine.getCurrentStock(),
+                        medicine.getAlertThreshold(),
+                        stockLevel
                 );
             }
-    
+
             // Prompt to select a medicine for replenishment
             System.out.println("--------------------------------------------------------------------------");
             System.out.print("Enter the number of the medicine to request replenishment (or 0 to go back): ");
-            
+
             int choice;
             while (true) {
                 if (sc.hasNextInt()) {
@@ -234,16 +236,16 @@ public class PharmacistMenu extends Menu {
                     sc.next(); // Clear invalid input
                 }
             }
-    
+
             // If user wants to go back
             if (choice == 0) {
                 System.out.println("Returning to previous menu...");
                 return;
             }
-    
+
             // Selected medicine for replenishment
             Medicine selectedMedicine = medicines.get(choice - 1);
-    
+
             // Prompt for replenishment quantity
             System.out.print("Enter the quantity to replenish for " + selectedMedicine.getMedicineName() + ": ");
             int quantity;
@@ -261,12 +263,12 @@ public class PharmacistMenu extends Menu {
                     sc.next(); // Clear invalid input
                 }
             }
-    
+
             // Add replenishment request
             ReplenishmentRequestContainer.addReplenishmentRequest(selectedMedicine.getMedicineName(), quantity);
             System.out.println("Replenishment request for " + quantity + " units of " + selectedMedicine.getMedicineName() + " has been added and is pending for approval from admin.");
         }
     }
-    
+
 
 }

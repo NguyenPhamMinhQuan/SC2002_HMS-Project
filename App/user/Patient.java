@@ -6,7 +6,7 @@ import App.models.Medical;
 
 /**
  * Represents a patient in the hospital system.
- * 
+ * <p>
  * The Patient class extends the User class and includes additional information such as date of birth,
  * phone number, blood type, and a medical record.
  * Each patient has their own unique Medical which stores diagnoses and treatments.
@@ -15,49 +15,48 @@ public class Patient extends User {
     private String dateOfBirth;
     private String phoneNumber;
     private String bloodType;
-    private Medical medicalRecord; // Each patient has their own Medical
+    private final Medical medicalRecord; // Each patient has their own Medical
 
 
     /**
      * Constructs a new Patient instance.
-     * 
-     * @param hospitalId       The unique ID of the patient in the hospital system.
-     * @param password         The password used for the patient's login.
-     * @param name             The name of the patient.
-     * @param gender           The gender of the patient.
-     * @param userType         The user type indicating the role (in this case, "Patient").
-     * @param email            The email address of the patient.
-     * @param dateOfBirth      The date of birth of the patient.
-     * @param phoneNumber      The contact phone number of the patient.
-     * @param bloodType        The blood type of the patient.
+     *
+     * @param hospitalId        The unique ID of the patient in the hospital system.
+     * @param password          The password used for the patient's login.
+     * @param name              The name of the patient.
+     * @param gender            The gender of the patient.
+     * @param userType          The user type indicating the role (in this case, "Patient").
+     * @param email             The email address of the patient.
+     * @param dateOfBirth       The date of birth of the patient.
+     * @param phoneNumber       The contact phone number of the patient.
+     * @param bloodType         The blood type of the patient.
      * @param medicalRecordPath The file path to load the patient's medical record data from.
      */
     public Patient(
-        String hospitalId, 
-        String password, 
-        String name, 
-        String gender, 
-        String userType, 
-        String email,
-        
-        String dateOfBirth,
-        String phoneNumber,
-        String bloodType,
+            String hospitalId,
+            String password,
+            String name,
+            String gender,
+            String userType,
+            String email,
 
-        String medicalRecordPath
-        ) 
-    {
-        super(hospitalId, password, name, gender, userType,email);
+            String dateOfBirth,
+            String phoneNumber,
+            String bloodType,
 
-        this.dateOfBirth = dateOfBirth; 
+            String medicalRecordPath
+    ) {
+        super(hospitalId, password, name, gender, userType, email);
+
+        this.dateOfBirth = dateOfBirth;
         this.phoneNumber = phoneNumber;
         this.bloodType = bloodType;
-        this.medicalRecord = new Medical(hospitalId,medicalRecordPath); // Initialize Medical with patient hospital ID and path to the Medical CSV
+        this.medicalRecord = new Medical(hospitalId, medicalRecordPath); // Initialize Medical with patient hospital ID and path to the Medical CSV
     }
 
     /**
      * Gets the date of birth of the patient.
-     * 
+     *
      * @return The date of birth of the patient.
      */
     public String getDateOfBirth() {
@@ -66,7 +65,7 @@ public class Patient extends User {
 
     /**
      * Sets the date of birth of the patient.
-     * 
+     *
      * @param dateOfBirth The new date of birth to set.
      */
     public void setDateOfBirth(String dateOfBirth) {
@@ -75,7 +74,7 @@ public class Patient extends User {
 
     /**
      * Gets the phone number of the patient.
-     * 
+     *
      * @return The phone number of the patient.
      */
     public String getPhoneNumber() {
@@ -85,7 +84,7 @@ public class Patient extends User {
 
     /**
      * Sets the phone number of the patient.
-     * 
+     *
      * @param phoneNumber The new phone number to set.
      */
     public void setPhoneNumber(String phoneNumber) {
@@ -94,7 +93,7 @@ public class Patient extends User {
 
     /**
      * Gets the blood type of the patient.
-     * 
+     *
      * @return The blood type of the patient.
      */
     public String getBloodType() {
@@ -103,7 +102,7 @@ public class Patient extends User {
 
     /**
      * Sets the blood type of the patient.
-     * 
+     *
      * @param bloodType The new blood type to set.
      */
     public void setBloodType(String bloodType) {
@@ -112,16 +111,16 @@ public class Patient extends User {
 
     /**
      * Gets the medical record of the patient.
-     * 
+     *
      * @return The medical record of the patient.
      */
     public Medical getMedicalRecord() {
         return medicalRecord;
     }
-    
+
     /**
      * Gets the list of all treatments in the patient's medical record.
-     * 
+     *
      * @return A list of all treatments.
      */
     public ArrayList<String> getTreatments() {
@@ -130,8 +129,8 @@ public class Patient extends User {
 
     /**
      * Edits a treatment plan in the patient's medical record by index.
-     * 
-     * @param index        The index of the treatment to edit.
+     *
+     * @param index         The index of the treatment to edit.
      * @param treatmentPlan The new treatment plan to set.
      */
     public void setTreatment(int index, String treatmentPlan) {
@@ -140,7 +139,7 @@ public class Patient extends User {
 
     /**
      * Adds a new treatment to the patient's medical record.
-     * 
+     *
      * @param treatmentPlan The treatment plan to add.
      */
     public void addTreatment(String treatmentPlan) {
@@ -149,7 +148,7 @@ public class Patient extends User {
 
     /**
      * Removes a treatment plan from the patient's medical record by index.
-     * 
+     *
      * @param index The index of the treatment plan to remove.
      */
     public void removeTreatmentPlan(int index) {
@@ -158,7 +157,7 @@ public class Patient extends User {
 
     /**
      * Gets the list of all diagnoses in the patient's medical record.
-     * 
+     *
      * @return A list of all diagnoses.
      */
     public ArrayList<String> getDiagnoses() {
@@ -167,7 +166,7 @@ public class Patient extends User {
 
     /**
      * Edits a diagnosis in the patient's medical record by index.
-     * 
+     *
      * @param index    The index of the diagnosis to edit.
      * @param diagnose The new diagnosis to set.
      */
@@ -177,7 +176,7 @@ public class Patient extends User {
 
     /**
      * Adds a new diagnosis to the patient's medical record.
-     * 
+     *
      * @param diagnose The diagnosis to add.
      */
     public void addDiagnose(String diagnose) {
@@ -186,7 +185,7 @@ public class Patient extends User {
 
     /**
      * Removes a diagnosis from the patient's medical record by index.
-     * 
+     *
      * @param index The index of the diagnosis to remove.
      */
     public void removeDiagnose(int index) {

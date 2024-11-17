@@ -2,7 +2,7 @@ package App.models;
 
 /**
  * Represents an abstract record with a unique identifier.
- * 
+ * <p>
  * This class serves as a base for all records within the system,
  * providing a globally unique identifier (ID) for each instance.
  */
@@ -20,7 +20,7 @@ public abstract class BaseModel {
 
     /**
      * Gets the unique record ID for this BaseModel.
-     * 
+     *
      * @return The unique identifier for this record.
      */
     public int getRecordId() {
@@ -30,7 +30,7 @@ public abstract class BaseModel {
     /**
      * Returns a string representation of the record.
      * This implementation returns the record ID as a string.
-     * 
+     *
      * @return The string representation of the record ID.
      */
     @Override

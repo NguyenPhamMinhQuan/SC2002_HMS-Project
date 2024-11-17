@@ -100,7 +100,7 @@ public class UserSystem implements System {
     public String toString() {//
         StringBuilder result = new StringBuilder();
         for (User user : users.values()) {
-            result.append(user.getHospitalId()).append(": ").append(user.toString()).append("\n");
+            result.append(user.getHospitalId()).append(": ").append(user).append("\n");
         }
         return result.toString();
     }
