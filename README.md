@@ -12,7 +12,7 @@ This repository contains the source code and documentation for the Hospital Mana
 ---
 
 ## Our team
-Our team is Group 2 from Lab Group SCS7 that comprises of:
+Our team is Group 2 from Lab Group SCS7 that comprises:
  - Hui Cheok Shun, Jordan
  - Jerwin Lee Chu Hao
  - Nguyen Pham Minh Quan
@@ -29,8 +29,8 @@ The project follows a modular structure to separate concerns:
 - `Main.java`: Entry point of the application.
 - `menu` folder: Contains classes to manage user menus for each role (e.g., DoctorMenu, PatientMenu).
 - `user` folder: Classes representing different user roles like Doctor, Patient, and Administrator.
-- `baseModel` folder: Handles medical records, appointment records, and prescriptions.
-- `container` folder: Manages data containers for users and records (e.g., PatientContainer, AppointmentContainer).
+- `models` folder: Handles medical records, appointment records, and prescriptions.
+- `system` folder: Manages data systems for users and records (e.g., PatientContainer, AppointmentContainer).
 - `data` folder: Contains all the CSV data files required for the project. These files are loaded at runtime to simulate real hospital data, and any updates to the system are saved back into the CSV files upon exit.
 
 ### Instructions to Compile and Run the App
@@ -63,20 +63,6 @@ This will start the Hospital Management System (HMS) via the Command Line Interf
 
 ---
 
-## Javadocs
-
-The `docs` folder contains the generated documentation for the Java code. It provides an organized view of the classes, methods, and their relationships within the HMS.
-
-### Overview
-The Javadocs provide:
-- Descriptions of each class and its purpose.
-- Details of methods and their parameters.
-- Information about data structures used throughout the application.
-
-To view the Javadocs, open the `index.html` file in the `docs` folder with any browser and navigate using the hyperlinks or search bar on the page.
-
----
-
 ## UML Class Diagram
 
 The UML class diagram illustrates the structure of the Hospital Management System, showing the relationships between different classes implemented.
@@ -87,15 +73,3 @@ The UML class diagram illustrates the structure of the Hospital Management Syste
 - **Class attributes**: Displays key properties of each class.
 - **Methods**: Shows major methods and their interactions.
 
----
-
-## Report
-
-The `report` folder contains the final project report, which outlines the OOP concepts and principles applications and design decisions made during the implementation of the Hospital Management System.
-
-### Overview
-- **Project Scope**: Describes the functionality and features of the system.
-- **Design Decisions**: Explains key design patterns and principles applied, limitations of the system, and highlight the additional features added and potential future improvements.
-- **Reflection**: Reflect on the journey in building the project, including challenges faced and lessons learnt.
-
-You can read our final report here: [Final Report](Report.pdf)
