@@ -3,15 +3,15 @@ package App.menu;
 import java.util.List;
 import java.util.Scanner;
 
-import App.container.data.AppointmentContainer;
-import App.container.data.AppointmentOutcomeRecordContainer;
-import App.container.data.MedicineContainer;
-import App.container.user.DoctorContainer;
-import App.container.user.PatientContainer;
-import App.record.Appointment;
-import App.record.AppointmentOutcomeRecord;
-import App.record.Medicine;
-import App.record.Prescription;
+import App.system.data.AppointmentOutcomeRecordSystem;
+import App.system.data.AppointmentSystem;
+import App.system.data.MedicineSystem;
+import App.system.user.DoctorSystem;
+import App.system.user.PatientSystem;
+import App.models.Appointment;
+import App.models.AppointmentOutcome;
+import App.models.Medicine;
+import App.models.Prescription;
 import App.user.Doctor;
 
 /**
@@ -22,10 +22,10 @@ import App.user.Doctor;
 public class DoctorMenu extends Menu {
     private String doctorHospitalId;
     private Doctor doctor;
-    private PatientContainer patientContainer;
-    private AppointmentContainer appointmentContainer;
-    private AppointmentOutcomeRecordContainer appointmentOutcomeRecordContainer;
-    private MedicineContainer medicineContainer;
+    private PatientSystem patientContainer;
+    private AppointmentSystem appointmentContainer;
+    private AppointmentOutcomeRecordSystem appointmentOutcomeRecordContainer;
+    private MedicineSystem medicineContainer;
 
 
     /**
@@ -38,7 +38,7 @@ public class DoctorMenu extends Menu {
      * @param appointmentOutcomeRecordContainer The container holding appointment outcome records.
      * @param medicineContainer The container holding medicine information.
      */
-    public DoctorMenu(String hospitalId, DoctorContainer doctorContainer, PatientContainer patientContainer, AppointmentContainer appointmentContainer, AppointmentOutcomeRecordContainer appointmentOutcomeRecordContainer, MedicineContainer medicineContainer) {
+    public DoctorMenu(String hospitalId, DoctorSystem doctorContainer, PatientSystem patientContainer, AppointmentSystem appointmentContainer, AppointmentOutcomeRecordSystem appointmentOutcomeRecordContainer, MedicineSystem medicineContainer) {
         this.doctorHospitalId = hospitalId;
         doctor = (Doctor) doctorContainer.getUserByHospitalId(doctorHospitalId);//here dont need this keyword because the parameter name is different
         this.patientContainer = patientContainer;
@@ -255,7 +255,7 @@ public class DoctorMenu extends Menu {
             Appointment selectedAppointment = appointments.get(choice - 1);
             System.out.println("You selected the appointment with Patient ID: " + selectedAppointment.getpatientHospitalId() + " Name: " + patientContainer.getUserByHospitalId(selectedAppointment.getpatientHospitalId()).getName() + " on " + selectedAppointment.getTime());
             System.out.println("----------------------------------------");
-            System.out.println("0. Complete the appointment and fill in Appointment Outcome Record");  
+            System.out.println("0. Complete the appointment and fill in Appointment Outcome BaseModel");
             System.out.print("Enter your choice: ");          
             String action = sc.nextLine().trim().toUpperCase();
     
@@ -264,14 +264,14 @@ public class DoctorMenu extends Menu {
                 System.out.println("Appointment completed.");
                 System.out.println("----------------------------------------");
 
-                // Prompt to fill in AppointmentOutcomeRecord
-                System.out.println("Fill in the Appointment Outcome Record:");
+                // Prompt to fill in AppointmentOutcome
+                System.out.println("Fill in the Appointment Outcome BaseModel:");
                 System.out.print("Enter service type: ");
                 String serviceType = sc.nextLine();
                 System.out.print("Enter consultation notes: ");
                 String consultationNotes = sc.nextLine();
             
-                // Create and add AppointmentOutcomeRecord
+                // Create and add AppointmentOutcome
                 appointmentOutcomeRecordContainer.addAppointmentOutcomeRecord(selectedAppointment, serviceType, consultationNotes);
                 
                 System.out.println("----------------------------------------");
@@ -350,7 +350,7 @@ public class DoctorMenu extends Menu {
                 }
                 System.out.println("You selected the appointment with Patient ID: " + selectedAppointment.getpatientHospitalId() + " Name: " + patientContainer.getUserByHospitalId(selectedAppointment.getpatientHospitalId()).getName() + " on " + selectedAppointment.getTime());
 
-                System.out.println("Appointment Outcome Record completed for the appointment with Patient ID: " + selectedAppointment.getpatientHospitalId() + " Name: " + patientContainer.getUserByHospitalId(selectedAppointment.getpatientHospitalId()).getName() + " on " + selectedAppointment.getTime());
+                System.out.println("Appointment Outcome BaseModel completed for the appointment with Patient ID: " + selectedAppointment.getpatientHospitalId() + " Name: " + patientContainer.getUserByHospitalId(selectedAppointment.getpatientHospitalId()).getName() + " on " + selectedAppointment.getTime());
             } else {
                 System.out.println("Invalid choice.");
             }
@@ -401,13 +401,13 @@ public class DoctorMenu extends Menu {
                 }
             }
 
-            // Fetch and display the Appointment Outcome Record
+            // Fetch and display the Appointment Outcome BaseModel
             Appointment selectedAppointment = appointments.get(choice - 1);
-            AppointmentOutcomeRecord outcomeRecord = appointmentOutcomeRecordContainer.getAppointmentOutcomeRecordById(selectedAppointment.getAppointmentIdentifyId());
+            AppointmentOutcome outcomeRecord = appointmentOutcomeRecordContainer.getAppointmentOutcomeRecordById(selectedAppointment.getAppointmentIdentifyId());
 
             if (outcomeRecord != null) {
                 System.out.println("----------------------------------------");
-                System.out.println("\nAppointment Outcome Record completed for the appointment with Patient ID: " + selectedAppointment.getpatientHospitalId() + " Name: " + patientContainer.getUserByHospitalId(selectedAppointment.getpatientHospitalId()).getName() + " on " + selectedAppointment.getTime());
+                System.out.println("\nAppointment Outcome BaseModel completed for the appointment with Patient ID: " + selectedAppointment.getpatientHospitalId() + " Name: " + patientContainer.getUserByHospitalId(selectedAppointment.getpatientHospitalId()).getName() + " on " + selectedAppointment.getTime());
                 System.out.println("Service Type: " + outcomeRecord.getServiceType());
                 System.out.println("Consultation Notes: " + outcomeRecord.getConsultationNotes());
                 System.out.println("\nPrescriptions:");
@@ -457,7 +457,7 @@ public class DoctorMenu extends Menu {
                 case 1:
                     System.out.print("Enter available slot (YYYY-MM-DD HH:MM): ");
                     String slot = sc.nextLine(); // Use nextLine to capture the full slot input
-                    if (App.container.data.AppointmentContainer.isValidDateTime(slot)) {
+                    if (AppointmentSystem.isValidDateTime(slot)) {
                         doctor.addAvailableSlot(slot);
                         System.out.println("Slot added successfully. :)");
                     } else {
@@ -486,10 +486,10 @@ public class DoctorMenu extends Menu {
         int medicalRecordChoice;
         do {
             System.out.println("----------------------------------------");
-            System.out.println("Medical Record Menu");
+            System.out.println("Medical BaseModel Menu");
             System.out.println("0. Back");
-            System.out.println("1. View Medical Record");
-            System.out.println("2. Edit Medical Record");
+            System.out.println("1. View Medical BaseModel");
+            System.out.println("2. Edit Medical BaseModel");
 
             System.out.print("Enter your choice: ");
             medicalRecordChoice=sc.nextInt();
@@ -548,7 +548,7 @@ public class DoctorMenu extends Menu {
             int editMedicalRecordChoice;
             do {
                 System.out.println("----------------------------------------");
-                System.out.println("Edit Medical Record of " + patientContainer.getUserByHospitalId(patientHospitalId).getName() + " (" + patientHospitalId + ")");
+                System.out.println("Edit Medical BaseModel of " + patientContainer.getUserByHospitalId(patientHospitalId).getName() + " (" + patientHospitalId + ")");
                 System.out.println("0. Back");
                 System.out.println("1. Add Diagnosis");
                 System.out.println("2. Add Treatment");

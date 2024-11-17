@@ -3,17 +3,14 @@ package App.menu;
 import java.util.List;
 import java.util.Scanner;
 
-import App.container.data.AppointmentContainer;
-import App.container.data.MedicineContainer;
-import App.container.data.ReplenishmentRequestContainer;
-import App.container.user.AdministratorContainer;
-import App.container.user.DoctorContainer;
-import App.container.user.PatientContainer;
-import App.container.user.PharmacistContainer;
-import App.container.user.StaffContainer;
-import App.record.Appointment;
-import App.record.Medicine;
-import App.record.ReplenishmentRequest;
+import App.system.data.AppointmentSystem;
+import App.system.data.MedicineSystem;
+import App.system.data.ReplenishmentRequestSystem;
+import App.system.user.*;
+import App.system.user.AdministratorSystem;
+import App.models.Appointment;
+import App.models.Medicine;
+import App.models.StockReplenishmentRequest;
 import App.user.Administrator;
 import App.user.Doctor;
 import App.user.Pharmacist;
@@ -28,27 +25,27 @@ import App.user.User;
 public class AdministratorMenu extends Menu {
     private String adminHospitalId;
     private Administrator administrator;
-    private PatientContainer patientContainer;
-    private DoctorContainer doctorContainer;
-    private PharmacistContainer pharmacistContainer;
-    private MedicineContainer medicineContainer;
-    private ReplenishmentRequestContainer replenishmentRequestContainer;
-    private AppointmentContainer appointmentContainer;
-    private AdministratorContainer administratorContainer;
+    private PatientSystem patientContainer;
+    private DoctorSystem doctorContainer;
+    private PharmacistSystem pharmacistContainer;
+    private MedicineSystem medicineContainer;
+    private ReplenishmentRequestSystem replenishmentRequestContainer;
+    private AppointmentSystem appointmentContainer;
+    private AdministratorSystem administratorContainer;
 
     /**
      * Constructs an AdministratorMenu with all the required containers for functionality.
      * 
      * @param hospitalId Administrator's hospital ID.
-     * @param administratorContainer Container for administrators.
-     * @param patientContainer Container for patients.
-     * @param doctorContainer Container for doctors.
-     * @param pharmacistContainer Container for pharmacists.
-     * @param medicineContainer Container for medicines.
-     * @param replenishmentRequestContainer Container for replenishment requests.
-     * @param appointmentContainer Container for appointments.
+     * @param administratorContainer System for administrators.
+     * @param patientContainer System for patients.
+     * @param doctorContainer System for doctors.
+     * @param pharmacistContainer System for pharmacists.
+     * @param medicineContainer System for medicines.
+     * @param replenishmentRequestContainer System for replenishment requests.
+     * @param appointmentContainer System for appointments.
      */
-    public AdministratorMenu(String hospitalId, AdministratorContainer administratorContainer, PatientContainer patientContainer, DoctorContainer doctorContainer, PharmacistContainer pharmacistContainer, MedicineContainer medicineContainer, ReplenishmentRequestContainer replenishmentRequestContainer, AppointmentContainer appointmentContainer) {
+    public AdministratorMenu(String hospitalId, AdministratorSystem administratorContainer, PatientSystem patientContainer, DoctorSystem doctorContainer, PharmacistSystem pharmacistContainer, MedicineSystem medicineContainer, ReplenishmentRequestSystem replenishmentRequestContainer, AppointmentSystem appointmentContainer) {
         this.adminHospitalId = hospitalId;
         administrator = (Administrator) administratorContainer.getUserByHospitalId(adminHospitalId);
         this.patientContainer = patientContainer;
@@ -66,23 +63,23 @@ public class AdministratorMenu extends Menu {
      */
     @Override
     public void run() {
-        Scanner sc=new Scanner(System.in);
+        Scanner sc=new Scanner(java.lang.System.in);
         int choice;
         do {
-            System.out.println("----------------------------------------");
-            System.out.println("Administrator Menu");
-            System.out.println("0. Log out");
-            System.out.println("1. View Appointment");
-            System.out.println("2. Manage Staff");
-            System.out.println("3. Manage Medicine");
-            System.out.println("4. Manage Replenishment Request");
-            System.out.println("5. Change Medicine Alert Level");
+            java.lang.System.out.println("----------------------------------------");
+            java.lang.System.out.println("Administrator Menu");
+            java.lang.System.out.println("0. Log out");
+            java.lang.System.out.println("1. View Appointment");
+            java.lang.System.out.println("2. Manage Staff");
+            java.lang.System.out.println("3. Manage Medicine");
+            java.lang.System.out.println("4. Manage Replenishment Request");
+            java.lang.System.out.println("5. Change Medicine Alert Level");
             
-            System.out.print("Enter your choice: ");
+            java.lang.System.out.print("Enter your choice: ");
             choice=sc.nextInt();
             switch (choice) {
                 case 0:
-                    System.out.println("Logging out..."); break;
+                    java.lang.System.out.println("Logging out..."); break;
                 case 1:
                     viewAppointment(); break;
                 case 2:
@@ -94,7 +91,7 @@ public class AdministratorMenu extends Menu {
                 case 5:
                     changeAlertLevel(); break; // missed function
                 default:
-                    System.out.println("Invalid choice");
+                    java.lang.System.out.println("Invalid choice");
             }
         } while (choice!=0);
     }
@@ -104,21 +101,21 @@ public class AdministratorMenu extends Menu {
      * Displays the list of medicines and allows the administrator to update the alert threshold.
      */
     private void changeAlertLevel(){
-        Scanner sc = new Scanner(System.in);
-        System.out.println("----------------------------------------");
-        System.out.println("All Medicines:");
-        System.out.printf("%-5s %-20s %-15s %-15s %-15s%n", "No.", "Medicine Name", "Current Stock", "Alert Threshold", "Stock Level");
-        System.out.println("------------------------------------------------------------");
+        Scanner sc = new Scanner(java.lang.System.in);
+        java.lang.System.out.println("----------------------------------------");
+        java.lang.System.out.println("All Medicines:");
+        java.lang.System.out.printf("%-5s %-20s %-15s %-15s %-15s%n", "No.", "Medicine Name", "Current Stock", "Alert Threshold", "Stock Level");
+        java.lang.System.out.println("------------------------------------------------------------");
     
         List<Medicine> medicines = medicineContainer.getAllMedicines();
     
         if (medicines.isEmpty()) {
-            System.out.println("No medicines in the inventory.");
+            java.lang.System.out.println("No medicines in the inventory.");
         } else {
             for (int i = 0; i < medicines.size(); i++) {
                 Medicine medicine = medicines.get(i);
                 String stockLevel = (medicine.getCurrentStock() <= medicine.getAlertThreshold()) ? "Low Stock" : "Normal";
-                System.out.printf("%-5d %-20s %-15d %-15d %-15s%n",
+                java.lang.System.out.printf("%-5d %-20s %-15d %-15d %-15s%n",
                     (i + 1),
                     medicine.getMedicineName(),
                     medicine.getCurrentStock(),
@@ -128,8 +125,8 @@ public class AdministratorMenu extends Menu {
             }
     
             // Prompt the user to select a medicine to update
-            System.out.println("------------------------------------------------------------");
-            System.out.print("Enter the number of the medicine you want to update stock alert level (or 0 to go back): ");
+            java.lang.System.out.println("------------------------------------------------------------");
+            java.lang.System.out.print("Enter the number of the medicine you want to update stock alert level (or 0 to go back): ");
             int choice;
             while (true) {
                 if (sc.hasNextInt()) {
@@ -138,26 +135,26 @@ public class AdministratorMenu extends Menu {
                     if (choice >= 0 && choice <= medicines.size()) {
                         break;
                     } else {
-                        System.out.println("Invalid choice. Please enter a number between 0 and " + medicines.size());
+                        java.lang.System.out.println("Invalid choice. Please enter a number between 0 and " + medicines.size());
                     }
                 } else {
-                    System.out.println("Invalid input. Please enter a number.");
+                    java.lang.System.out.println("Invalid input. Please enter a number.");
                     sc.next(); // Clear invalid input
                 }
             }
     
             // Go back if user chooses 0
             if (choice == 0) {
-                System.out.println("Returning to previous menu...");
+                java.lang.System.out.println("Returning to previous menu...");
                 return;
             }
     
             // Get the selected medicine
             Medicine selectedMedicine = medicines.get(choice - 1);
-            System.out.println("You selected: " + selectedMedicine.getMedicineName());
+            java.lang.System.out.println("You selected: " + selectedMedicine.getMedicineName());
             
             // Prompt for the new stock level
-            System.out.print("Enter the new stock alert level: ");
+            java.lang.System.out.print("Enter the new stock alert level: ");
             int newAlertLevel;
             while (true) {
                 if (sc.hasNextInt()) {
@@ -166,17 +163,17 @@ public class AdministratorMenu extends Menu {
                     if (newAlertLevel >= 0) {
                         break;
                     } else {
-                        System.out.println("Please enter a valid positive integer for alert stock level.");
+                        java.lang.System.out.println("Please enter a valid positive integer for alert stock level.");
                     }
                 } else {
-                    System.out.println("Invalid input. Please enter an integer.");
+                    java.lang.System.out.println("Invalid input. Please enter an integer.");
                     sc.next(); // Clear invalid input
                 }
             }
     
             // Update the stock level
             selectedMedicine.setAlertThreshold(newAlertLevel);
-            System.out.println("Alert stock level for " + selectedMedicine.getMedicineName() + " updated to " + newAlertLevel + ".");
+            java.lang.System.out.println("Alert stock level for " + selectedMedicine.getMedicineName() + " updated to " + newAlertLevel + ".");
         }
     }
 
@@ -185,21 +182,21 @@ public class AdministratorMenu extends Menu {
      * Allows the administrator to update medicine stock levels.
      */
     private void manageMedicine() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("----------------------------------------");
-        System.out.println("All Medicines:");
-        System.out.printf("%-5s %-20s %-15s %-15s %-15s%n", "No.", "Medicine Name", "Current Stock", "Alert Threshold", "Stock Level");
-        System.out.println("------------------------------------------------------------");
+        Scanner sc = new Scanner(java.lang.System.in);
+        java.lang.System.out.println("----------------------------------------");
+        java.lang.System.out.println("All Medicines:");
+        java.lang.System.out.printf("%-5s %-20s %-15s %-15s %-15s%n", "No.", "Medicine Name", "Current Stock", "Alert Threshold", "Stock Level");
+        java.lang.System.out.println("------------------------------------------------------------");
     
         List<Medicine> medicines = medicineContainer.getAllMedicines();
     
         if (medicines.isEmpty()) {
-            System.out.println("No medicines in the inventory.");
+            java.lang.System.out.println("No medicines in the inventory.");
         } else {
             for (int i = 0; i < medicines.size(); i++) {
                 Medicine medicine = medicines.get(i);
                 String stockLevel = (medicine.getCurrentStock() <= medicine.getAlertThreshold()) ? "Low Stock" : "Normal";
-                System.out.printf("%-5d %-20s %-15d %-15d %-15s%n",
+                java.lang.System.out.printf("%-5d %-20s %-15d %-15d %-15s%n",
                     (i + 1),
                     medicine.getMedicineName(),
                     medicine.getCurrentStock(),
@@ -209,8 +206,8 @@ public class AdministratorMenu extends Menu {
             }
     
             // Prompt the user to select a medicine to update
-            System.out.println("------------------------------------------------------------");
-            System.out.print("Enter the number of the medicine you want to update (or 0 to go back): ");
+            java.lang.System.out.println("------------------------------------------------------------");
+            java.lang.System.out.print("Enter the number of the medicine you want to update (or 0 to go back): ");
             int choice;
             while (true) {
                 if (sc.hasNextInt()) {
@@ -219,26 +216,26 @@ public class AdministratorMenu extends Menu {
                     if (choice >= 0 && choice <= medicines.size()) {
                         break;
                     } else {
-                        System.out.println("Invalid choice. Please enter a number between 0 and " + medicines.size());
+                        java.lang.System.out.println("Invalid choice. Please enter a number between 0 and " + medicines.size());
                     }
                 } else {
-                    System.out.println("Invalid input. Please enter a number.");
+                    java.lang.System.out.println("Invalid input. Please enter a number.");
                     sc.next(); // Clear invalid input
                 }
             }
     
             // Go back if user chooses 0
             if (choice == 0) {
-                System.out.println("Returning to previous menu...");
+                java.lang.System.out.println("Returning to previous menu...");
                 return;
             }
     
             // Get the selected medicine
             Medicine selectedMedicine = medicines.get(choice - 1);
-            System.out.println("You selected: " + selectedMedicine.getMedicineName());
+            java.lang.System.out.println("You selected: " + selectedMedicine.getMedicineName());
             
             // Prompt for the new stock level
-            System.out.print("Enter the new stock level: ");
+            java.lang.System.out.print("Enter the new stock level: ");
             int newStock;
             while (true) {
                 if (sc.hasNextInt()) {
@@ -247,17 +244,17 @@ public class AdministratorMenu extends Menu {
                     if (newStock >= 0) {
                         break;
                     } else {
-                        System.out.println("Please enter a valid positive integer for the stock level.");
+                        java.lang.System.out.println("Please enter a valid positive integer for the stock level.");
                     }
                 } else {
-                    System.out.println("Invalid input. Please enter an integer.");
+                    java.lang.System.out.println("Invalid input. Please enter an integer.");
                     sc.next(); // Clear invalid input
                 }
             }
     
             // Update the stock level
             selectedMedicine.setCurrentStock(newStock);
-            System.out.println("Stock level for " + selectedMedicine.getMedicineName() + " updated to " + newStock + ".");
+            java.lang.System.out.println("Stock level for " + selectedMedicine.getMedicineName() + " updated to " + newStock + ".");
         }
     }
     
@@ -266,20 +263,20 @@ public class AdministratorMenu extends Menu {
      * Allows the administrator to approve or reject requests for replenishing medicine stock.
      */
     private void manageReplenishmentRequest() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("----------------------------------------");
-        System.out.println("All Replenishment Requests:");
-        System.out.printf("%-5s %-20s %-15s %-15s%n", "No.", "Medicine Name", "Quantity", "Status");
-        System.out.println("------------------------------------------------------------");
+        Scanner sc = new Scanner(java.lang.System.in);
+        java.lang.System.out.println("----------------------------------------");
+        java.lang.System.out.println("All Replenishment Requests:");
+        java.lang.System.out.printf("%-5s %-20s %-15s %-15s%n", "No.", "Medicine Name", "Quantity", "Status");
+        java.lang.System.out.println("------------------------------------------------------------");
     
-        List<ReplenishmentRequest> requests = replenishmentRequestContainer.getAllReplenishmentRequests();
+        List<StockReplenishmentRequest> requests = replenishmentRequestContainer.getAllReplenishmentRequests();
     
         if (requests.isEmpty()) {
-            System.out.println("No replenishment requests found.");
+            java.lang.System.out.println("No replenishment requests found.");
         } else {
             for (int i = 0; i < requests.size(); i++) {
-                ReplenishmentRequest request = requests.get(i);
-                System.out.printf("%-5d %-20s %-15d %-15s%n",
+                StockReplenishmentRequest request = requests.get(i);
+                java.lang.System.out.printf("%-5d %-20s %-15d %-15s%n",
                     (i + 1),
                     request.getMedicineName(),
                     request.getQuantity(),
@@ -288,8 +285,8 @@ public class AdministratorMenu extends Menu {
             }
     
             // Prompt the user to select a request
-            System.out.println("------------------------------------------------------------");
-            System.out.print("Enter the number of the request you want to approve/reject (or 0 to go back): ");
+            java.lang.System.out.println("------------------------------------------------------------");
+            java.lang.System.out.print("Enter the index of the request you want to approve/reject (or 0 to go back): ");
             int choice;
             while (true) {
                 if (sc.hasNextInt()) {
@@ -298,30 +295,30 @@ public class AdministratorMenu extends Menu {
                     if (choice >= 0 && choice <= requests.size()) {
                         break;
                     } else {
-                        System.out.println("Invalid choice. Please enter a number between 0 and " + requests.size());
+                        java.lang.System.out.println("Invalid choice. Please enter a number between 0 and " + requests.size());
                     }
                 } else {
-                    System.out.println("Invalid input. Please enter a number.");
+                    java.lang.System.out.println("Invalid input. Please enter a number.");
                     sc.next(); // Clear invalid input
                 }
             }
     
             // Go back if user chooses 0
             if (choice == 0) {
-                System.out.println("Returning to previous menu...");
+                java.lang.System.out.println("Returning to previous menu...");
                 return;
             }
     
             // Get the selected request
-            ReplenishmentRequest selectedRequest = requests.get(choice - 1);
-            System.out.println("You selected the request for: " + selectedRequest.getMedicineName());
+            StockReplenishmentRequest selectedRequest = requests.get(choice - 1);
+            java.lang.System.out.println("You selected the request for: " + selectedRequest.getMedicineName());
     
             // Prompt to approve or reject the request
-            System.out.println("----------------------------------------");
-            System.out.println("Select an action:");
-            System.out.println("1. Approve and add medicine");
-            System.out.println("2. Reject and delete request");
-            System.out.print("Enter your choice: ");
+            java.lang.System.out.println("----------------------------------------");
+            java.lang.System.out.println("Select an action:");
+            java.lang.System.out.println("1. Approve and add medicine");
+            java.lang.System.out.println("2. Reject and delete request");
+            java.lang.System.out.print("Enter your choice: ");
             
             int action;
             while (true) {
@@ -331,10 +328,10 @@ public class AdministratorMenu extends Menu {
                     if (action == 1 || action == 2) {
                         break;
                     } else {
-                        System.out.println("Invalid choice. Please enter 1 to approve or 2 to reject.");
+                        java.lang.System.out.println("Invalid choice. Please enter 1 to approve or 2 to reject.");
                     }
                 } else {
-                    System.out.println("Invalid input. Please enter a number.");
+                    java.lang.System.out.println("Invalid input. Please enter a number.");
                     sc.next(); // Clear invalid input
                 }
             }
@@ -346,14 +343,14 @@ public class AdministratorMenu extends Menu {
                 if (medicine != null) {
                     int newStock = medicine.getCurrentStock() + selectedRequest.getQuantity();
                     medicine.setCurrentStock(newStock);
-                    System.out.println("Request approved. Inventory updated for " + selectedRequest.getMedicineName() + ".");
+                    java.lang.System.out.println("Request approved. Inventory updated for " + selectedRequest.getMedicineName() + ".");
                 } else {
-                    System.out.println("Error: Medicine not found in inventory.");
+                    java.lang.System.out.println("Error: Medicine not found in inventory.");
                 }
             } else if (action == 2) {
                 // Reject: remove the request
                 replenishmentRequestContainer.removeReplenishmentRequest(selectedRequest.getRecordId());
-                System.out.println("Request rejected and removed.");
+                java.lang.System.out.println("Request rejected and removed.");
             }
         }
     }
@@ -364,19 +361,19 @@ public class AdministratorMenu extends Menu {
      * Provides an overview of appointments including their status and the associated doctor and patient.
      */
     public void viewAppointment() {
-        System.out.println("----------------------------------------");
-        System.out.println("All Appointments:");
-        System.out.printf("%-5s %-15s %-15s %-15s %-15s%n", "No.", "Date & Time", "Patient ID", "Doctor ID", "Status");
-        System.out.println("------------------------------------------------------------");
+        java.lang.System.out.println("----------------------------------------");
+        java.lang.System.out.println("All Appointments:");
+        java.lang.System.out.printf("%-5s %-15s %-15s %-15s %-15s%n", "No.", "Date & Time", "Patient ID", "Doctor ID", "Status");
+        java.lang.System.out.println("------------------------------------------------------------");
 
         List<Appointment> appointments = appointmentContainer.getAllAppointments();
 
         if (appointments.isEmpty()) {
-            System.out.println("No appointments found.");
+            java.lang.System.out.println("No appointments found.");
         } else {
             for (int i = 0; i < appointments.size(); i++) {
                 Appointment appointment = appointments.get(i);
-                System.out.printf("%-5d %-15s %-15s %-15s %-15s%n",
+                java.lang.System.out.printf("%-5d %-15s %-15s %-15s %-15s%n",
                     (i + 1),
                     appointment.getTime(),
                     appointment.getpatientHospitalId(),
@@ -392,23 +389,23 @@ public class AdministratorMenu extends Menu {
      * Provides options to add, edit, or delete staff members.
      */
     private void manageStaff() {
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = new Scanner(java.lang.System.in);
         int choice;
         
         do {
-            System.out.println("----------------------------------------");
-            System.out.println("Manage Staff");
-            System.out.println("0. Back");
-            System.out.println("1. View All Staff");
-            System.out.println("2. Add Staff");
-            System.out.println("3. Edit Staff");
-            System.out.println("4. Delete Staff");
-            System.out.print("Enter your choice: ");
+            java.lang.System.out.println("----------------------------------------");
+            java.lang.System.out.println("Manage Staff");
+            java.lang.System.out.println("0. Back");
+            java.lang.System.out.println("1. View All Staff");
+            java.lang.System.out.println("2. Add Staff");
+            java.lang.System.out.println("3. Edit Staff");
+            java.lang.System.out.println("4. Delete Staff");
+            java.lang.System.out.print("Enter your choice: ");
             choice = sc.nextInt();
             
             switch (choice) {
                 case 0:
-                    System.out.println("Returning to previous menu..."); break;
+                    java.lang.System.out.println("Returning to previous menu..."); break;
                 case 1:
                     printAllStaff(); break;
                 case 2:
@@ -418,7 +415,7 @@ public class AdministratorMenu extends Menu {
                 case 4:
                     deleteStaff(); break;
                 default:
-                    System.out.println("Invalid choice. Please select a valid option.");
+                    java.lang.System.out.println("Invalid choice. Please select a valid option.");
             }
         } while (choice != 0);
     }
@@ -428,38 +425,38 @@ public class AdministratorMenu extends Menu {
      * Prompts the administrator for staff details including role, ID, name, and other details.
      */
     private void addStaff() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Add Staff");
+        Scanner sc = new Scanner(java.lang.System.in);
+        java.lang.System.out.println("Add Staff");
         
         // Collect staff details
-        System.out.print("Enter staff type (Doctor/Pharmacist/Administrator): ");
+        java.lang.System.out.print("Enter staff type (Doctor/Pharmacist/Administrator): ");
         String userType = sc.nextLine().trim();
         if (!userType.equalsIgnoreCase("Doctor") && !userType.equalsIgnoreCase("Pharmacist") && !userType.equalsIgnoreCase("Administrator")) {
-            System.out.println("Invalid staff type entered.");
+            java.lang.System.out.println("Invalid staff type entered.");
         }
         
-        System.out.print("Enter Hospital ID: ");
+        java.lang.System.out.print("Enter Hospital ID: ");
         String hospitalId = sc.nextLine().trim();
-        System.out.print("Enter Password: ");
+        java.lang.System.out.print("Enter Password: ");
         String password = sc.nextLine().trim();
-        System.out.print("Enter Name: ");
+        java.lang.System.out.print("Enter Name: ");
         String name = sc.nextLine().trim();
-        System.out.print("Enter Gender (Male/Female): ");
+        java.lang.System.out.print("Enter Gender (Male/Female): ");
         String gender = sc.nextLine().trim();
-        System.out.print("Enter Email: ");
+        java.lang.System.out.print("Enter Email: ");
         String email = sc.nextLine().trim();
-        System.out.print("Enter Age: ");
+        java.lang.System.out.print("Enter Age: ");
         int age = sc.nextInt();
         sc.nextLine(); // Clear buffer after reading integer input
 
         // Add staff to the appropriate container based on type
-        ((StaffContainer) getContainerByType(userType)).addStaff(hospitalId, password, name, gender, userType, email, age);
+        ((StaffSystem) getContainerByType(userType)).addStaff(hospitalId, password, name, gender, userType, email, age);
 
-        System.out.println("Staff added successfully.");
+        java.lang.System.out.println("Staff added successfully.");
     }
 
     // Helper function to get the correct container based on user type
-    private StaffContainer getContainerByType(String userType) {
+    private StaffSystem getContainerByType(String userType) {
         switch (userType.toLowerCase()) {
             case "doctor":
                 return doctorContainer;
@@ -477,76 +474,76 @@ public class AdministratorMenu extends Menu {
      * Prompts the administrator to enter new values for specific fields.
      */
     private void editStaff() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Edit Staff");
+        Scanner sc = new Scanner(java.lang.System.in);
+        java.lang.System.out.println("Edit Staff");
 
         // Ask for the staff type
-        System.out.print("Enter staff type to edit (Doctor/Pharmacist/Administrator): ");
+        java.lang.System.out.print("Enter staff type to edit (Doctor/Pharmacist/Administrator): ");
         String userType = sc.nextLine().trim();
         Staff staff = null;
 
         if (userType.equalsIgnoreCase("Doctor")) {
-            System.out.print("Enter Doctor's Hospital ID: ");
+            java.lang.System.out.print("Enter Doctor's Hospital ID: ");
             String hospitalId = sc.nextLine().trim();
             staff = doctorContainer.getDoctorByHospitalId(hospitalId);
 
         } else if (userType.equalsIgnoreCase("Pharmacist")) {
-            System.out.print("Enter Pharmacist's Hospital ID: ");
+            java.lang.System.out.print("Enter Pharmacist's Hospital ID: ");
             String hospitalId = sc.nextLine().trim();
             staff = pharmacistContainer.getPharmacistByHospitalId(hospitalId);
 
         } else if (userType.equalsIgnoreCase("Administrator")) {
-            System.out.print("Enter Administrator's Hospital ID: ");
+            java.lang.System.out.print("Enter Administrator's Hospital ID: ");
             String hospitalId = sc.nextLine().trim();
             staff = administratorContainer.getAdministratorByHospitalId(hospitalId);
 
         } else {
-            System.out.println("Invalid staff type entered.");
+            java.lang.System.out.println("Invalid staff type entered.");
             return;
         }
 
         // Check if staff was found
         if (staff == null) {
-            System.out.println("No staff found with the provided Hospital ID.");
+            java.lang.System.out.println("No staff found with the provided Hospital ID.");
             return;
         }
 
         // Display current details and prompt for updates
-        System.out.println("Editing details for " + userType + " ID: " + staff.getHospitalId());
-        System.out.println("Current Name: " + staff.getName());
-        System.out.print("Enter new Name (or press Enter to keep current): ");
+        java.lang.System.out.println("Editing details for " + userType + " ID: " + staff.getHospitalId());
+        java.lang.System.out.println("Current Name: " + staff.getName());
+        java.lang.System.out.print("Enter new Name (or press Enter to keep current): ");
         String newName = sc.nextLine().trim();
         if (!newName.isEmpty()) {
             staff.setName(newName);
         }
 
-        System.out.println("Current Gender: " + staff.getGender());
-        System.out.print("Enter new Gender (or press Enter to keep current): ");
+        java.lang.System.out.println("Current Gender: " + staff.getGender());
+        java.lang.System.out.print("Enter new Gender (or press Enter to keep current): ");
         String newGender = sc.nextLine().trim();
         if (!newGender.isEmpty()) {
             staff.setGender(newGender);
         }
 
-        System.out.println("Current Email: " + staff.getEmail());
-        System.out.print("Enter new Email (or press Enter to keep current): ");
+        java.lang.System.out.println("Current Email: " + staff.getEmail());
+        java.lang.System.out.print("Enter new Email (or press Enter to keep current): ");
         String newEmail = sc.nextLine().trim();
         if (!newEmail.isEmpty()) {
             staff.setEmail(newEmail);
         }
 
-        System.out.println("Current Age: " + staff.getAge());
-        System.out.print("Enter new Age (or press Enter to keep current): ");
+        java.lang.System.out.println("Current Age: " + staff.getAge());
+        java.lang.System.out.print("Enter new Age (or press Enter to keep current): ");
         String ageInput = sc.nextLine().trim();
         if (!ageInput.isEmpty()) {
             try {
                 int newAge = Integer.parseInt(ageInput);
                 staff.setAge(newAge);
             } catch (NumberFormatException e) {
-                System.out.println("Invalid age entered. Age not updated.");
+                java.lang.System.out.println("Invalid age entered. Age not updated.");
             }
         }
 
-        System.out.println(userType + " details updated successfully.");
+        java.lang.System.out.println(userType + " details updated successfully.");
     }
 
 
@@ -555,60 +552,60 @@ public class AdministratorMenu extends Menu {
      * Removes the staff member identified by their hospital ID.
      */
     private void deleteStaff() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Delete Staff");
+        Scanner sc = new Scanner(java.lang.System.in);
+        java.lang.System.out.println("Delete Staff");
     
         // Ask for the staff type
-        System.out.print("Enter staff type to delete (Doctor/Pharmacist/Administrator): ");
+        java.lang.System.out.print("Enter staff type to delete (Doctor/Pharmacist/Administrator): ");
         String userType = sc.nextLine().trim();
         boolean success = false;
     
         if (userType.equalsIgnoreCase("Doctor")) {
-            System.out.print("Enter Doctor's Hospital ID: ");
+            java.lang.System.out.print("Enter Doctor's Hospital ID: ");
             String hospitalId = sc.nextLine().trim();
             Doctor doctor = doctorContainer.getDoctorByHospitalId(hospitalId);
             
             if (doctor != null) {
                 doctorContainer.removeUser(hospitalId);
                 success = true;
-                System.out.println("Doctor with Hospital ID " + hospitalId + " has been deleted.");
+                java.lang.System.out.println("Doctor with Hospital ID " + hospitalId + " has been deleted.");
             } else {
-                System.out.println("No Doctor found with the provided Hospital ID.");
+                java.lang.System.out.println("No Doctor found with the provided Hospital ID.");
             }
     
         } else if (userType.equalsIgnoreCase("Pharmacist")) {
-            System.out.print("Enter Pharmacist's Hospital ID: ");
+            java.lang.System.out.print("Enter Pharmacist's Hospital ID: ");
             String hospitalId = sc.nextLine().trim();
             Pharmacist pharmacist = pharmacistContainer.getPharmacistByHospitalId(hospitalId);
             
             if (pharmacist != null) {
                 pharmacistContainer.removeUser(hospitalId);
                 success = true;
-                System.out.println("Pharmacist with Hospital ID " + hospitalId + " has been deleted.");
+                java.lang.System.out.println("Pharmacist with Hospital ID " + hospitalId + " has been deleted.");
             } else {
-                System.out.println("No Pharmacist found with the provided Hospital ID.");
+                java.lang.System.out.println("No Pharmacist found with the provided Hospital ID.");
             }
     
         } else if (userType.equalsIgnoreCase("Administrator")) {
-            System.out.print("Enter Administrator's Hospital ID: ");
+            java.lang.System.out.print("Enter Administrator's Hospital ID: ");
             String hospitalId = sc.nextLine().trim();
             Administrator administrator = administratorContainer.getAdministratorByHospitalId(hospitalId);
             
             if (administrator != null) {
                 administratorContainer.removeUser(hospitalId);
                 success = true;
-                System.out.println("Administrator with Hospital ID " + hospitalId + " has been deleted.");
+                java.lang.System.out.println("Administrator with Hospital ID " + hospitalId + " has been deleted.");
             } else {
-                System.out.println("No Administrator found with the provided Hospital ID.");
+                java.lang.System.out.println("No Administrator found with the provided Hospital ID.");
             }
     
         } else {
-            System.out.println("Invalid staff type entered.");
+            java.lang.System.out.println("Invalid staff type entered.");
             return;
         }
     
         if (!success) {
-            System.out.println("Deletion failed. Please check the Hospital ID and try again.");
+            java.lang.System.out.println("Deletion failed. Please check the Hospital ID and try again.");
         }
     }    
 
@@ -617,22 +614,22 @@ public class AdministratorMenu extends Menu {
      * Provides options to filter staff by gender, age, or role.
      */
     private void printAllStaff() {
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = new Scanner(java.lang.System.in);
         int choice;
         do {
-            System.out.println("----------------------------------------");
-            System.out.println("View Staff");
-            System.out.println("0. Back");
-            System.out.println("1. Filtered by gender");
-            System.out.println("2. Filtered by age");
-            System.out.println("3. Filtered by role");
-            System.out.println("4. No Filter");
-            System.out.print("Enter your choice: ");
+            java.lang.System.out.println("----------------------------------------");
+            java.lang.System.out.println("View Staff");
+            java.lang.System.out.println("0. Back");
+            java.lang.System.out.println("1. Filtered by gender");
+            java.lang.System.out.println("2. Filtered by age");
+            java.lang.System.out.println("3. Filtered by role");
+            java.lang.System.out.println("4. No Filter");
+            java.lang.System.out.print("Enter your choice: ");
             choice = sc.nextInt();
             
             switch (choice) {
                 case 0:
-                    System.out.println("Returning to previous menu..."); break;
+                    java.lang.System.out.println("Returning to previous menu..."); break;
                 case 1:
                     genderFilteredView(); break;
                 case 2:
@@ -642,7 +639,7 @@ public class AdministratorMenu extends Menu {
                 case 4:
                     noFilterView();break;
                 default:
-                    System.out.println("Invalid choice. Please select a valid option.");
+                    java.lang.System.out.println("Invalid choice. Please select a valid option.");
             }
         } while (choice != 0);
     }
@@ -653,11 +650,11 @@ public class AdministratorMenu extends Menu {
      * Allows the administrator to view only male or female staff.
      */
     public void genderFilteredView() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Select Gender to View:");
-        System.out.println("1. Male");
-        System.out.println("2. Female");
-        System.out.print("Enter the number corresponding to the gender: ");
+        Scanner sc = new Scanner(java.lang.System.in);
+        java.lang.System.out.println("Select Gender to View:");
+        java.lang.System.out.println("1. Male");
+        java.lang.System.out.println("2. Female");
+        java.lang.System.out.print("Enter the number corresponding to the gender: ");
         
         int choice = sc.nextInt();
         sc.nextLine(); 
@@ -670,34 +667,34 @@ public class AdministratorMenu extends Menu {
                 gender = "Female";
                 break;
             default:
-                System.out.println("Invalid choice. Returning to previous menu.");
+                java.lang.System.out.println("Invalid choice. Returning to previous menu.");
                 return;
         }
-        System.out.println("Staff - Gender: " + gender);
-        System.out.printf("%-5s %-15s %-20s %-15s %-5s%n", "No.", "Hospital ID", "Name", "Role", "Age");
-        System.out.println("-----------------------------------------------------------------------");
+        java.lang.System.out.println("Staff - Gender: " + gender);
+        java.lang.System.out.printf("%-5s %-15s %-20s %-15s %-5s%n", "No.", "Hospital ID", "Name", "Role", "Age");
+        java.lang.System.out.println("-----------------------------------------------------------------------");
         int counter = 1;
     
         List<User> doctors = doctorContainer.getAllDoctors().values().stream().filter(user -> user.getGender().equalsIgnoreCase(gender)).toList();
         for (User user : doctors) {
             Doctor doctor = (Doctor) user;
-            System.out.printf("%-5d %-15s %-20s %-15s %-5d%n", counter++, doctor.getHospitalId(), doctor.getName(), "Doctor", doctor.getAge());
+            java.lang.System.out.printf("%-5d %-15s %-20s %-15s %-5d%n", counter++, doctor.getHospitalId(), doctor.getName(), "Doctor", doctor.getAge());
         }
     
         List<User> pharmacists = pharmacistContainer.getAllPharmacists().values().stream().filter(user -> user.getGender().equalsIgnoreCase(gender)).toList();
         for (User user : pharmacists) {
             Pharmacist pharmacist = (Pharmacist) user;
-            System.out.printf("%-5d %-15s %-20s %-15s %-5d%n", counter++, pharmacist.getHospitalId(), pharmacist.getName(), "Pharmacist", pharmacist.getAge());
+            java.lang.System.out.printf("%-5d %-15s %-20s %-15s %-5d%n", counter++, pharmacist.getHospitalId(), pharmacist.getName(), "Pharmacist", pharmacist.getAge());
         }
     
         List<User> admins = administratorContainer.getAllAdministrators().values().stream().filter(user -> user.getGender().equalsIgnoreCase(gender)).toList();
         for (User user : admins) {
             Administrator admin = (Administrator) user;
-            System.out.printf("%-5d %-15s %-20s %-15s %-5d%n", counter++, admin.getHospitalId(), admin.getName(), "Administrator", admin.getAge());
+            java.lang.System.out.printf("%-5d %-15s %-20s %-15s %-5d%n", counter++, admin.getHospitalId(), admin.getName(), "Administrator", admin.getAge());
         }
     
         if (counter == 1) {
-            System.out.println("No staff members found with the gender: " + gender);
+            java.lang.System.out.println("No staff members found with the gender: " + gender);
         }
     }
     
@@ -707,24 +704,24 @@ public class AdministratorMenu extends Menu {
      * Allows the administrator to specify a lower and upper limit for age.
      */
     public void ageFilteredView() {
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = new Scanner(java.lang.System.in);
         
-        System.out.println("Enter Age Range:");
-        System.out.print("Enter lower age limit: ");
+        java.lang.System.out.println("Enter Age Range:");
+        java.lang.System.out.print("Enter lower age limit: ");
         int lowerLimit = sc.nextInt();
         
-        System.out.print("Enter upper age limit: ");
+        java.lang.System.out.print("Enter upper age limit: ");
         int upperLimit = sc.nextInt();
         sc.nextLine();
     
         if (lowerLimit > upperLimit) {
-            System.out.println("Invalid range. The lower limit should be less than or equal to the upper limit.");
+            java.lang.System.out.println("Invalid range. The lower limit should be less than or equal to the upper limit.");
             return;
         }
     
-        System.out.println("Staff - Age Range: " + lowerLimit + " to " + upperLimit);
-        System.out.printf("%-5s %-15s %-20s %-15s %-10s%n", "No.", "Hospital ID", "Name", "Role", "Age");
-        System.out.println("-----------------------------------------------------------------------");
+        java.lang.System.out.println("Staff - Age Range: " + lowerLimit + " to " + upperLimit);
+        java.lang.System.out.printf("%-5s %-15s %-20s %-15s %-10s%n", "No.", "Hospital ID", "Name", "Role", "Age");
+        java.lang.System.out.println("-----------------------------------------------------------------------");
     
         int counter = 1;
     
@@ -737,7 +734,7 @@ public class AdministratorMenu extends Menu {
             .toList();
         
         for (Doctor doctor : doctors) {
-            System.out.printf("%-5d %-15s %-20s %-15s %-10d%n", counter++, doctor.getHospitalId(), doctor.getName(), "Doctor", doctor.getAge());
+            java.lang.System.out.printf("%-5d %-15s %-20s %-15s %-10d%n", counter++, doctor.getHospitalId(), doctor.getName(), "Doctor", doctor.getAge());
         }
     
         List<Pharmacist> pharmacists = pharmacistContainer.getAllPharmacists().values().stream()
@@ -749,7 +746,7 @@ public class AdministratorMenu extends Menu {
             .toList();
         
         for (Pharmacist pharmacist : pharmacists) {
-            System.out.printf("%-5d %-15s %-20s %-15s %-10d%n", counter++, pharmacist.getHospitalId(), pharmacist.getName(), "Pharmacist", pharmacist.getAge());
+            java.lang.System.out.printf("%-5d %-15s %-20s %-15s %-10d%n", counter++, pharmacist.getHospitalId(), pharmacist.getName(), "Pharmacist", pharmacist.getAge());
         }
     
         List<Administrator> admins = administratorContainer.getAllAdministrators().values().stream()
@@ -761,11 +758,11 @@ public class AdministratorMenu extends Menu {
             .toList();
         
         for (Administrator admin : admins) {
-            System.out.printf("%-5d %-15s %-20s %-15s %-10d%n", counter++, admin.getHospitalId(), admin.getName(), "Administrator", admin.getAge());
+            java.lang.System.out.printf("%-5d %-15s %-20s %-15s %-10d%n", counter++, admin.getHospitalId(), admin.getName(), "Administrator", admin.getAge());
         }
     
         if (counter == 1) {
-            System.out.println("No staff members found within the age range: " + lowerLimit + " to " + upperLimit);
+            java.lang.System.out.println("No staff members found within the age range: " + lowerLimit + " to " + upperLimit);
         }
     }
     
@@ -776,46 +773,46 @@ public class AdministratorMenu extends Menu {
      * Allows the administrator to view staff by specific roles such as Doctor, Pharmacist, or Administrator.
      */
     public void roleFilterView(){
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Select Role to View:");
-        System.out.println("1. Doctor");
-        System.out.println("2. Pharmacist");
-        System.out.println("3. Administrator");
-        System.out.print("Enter the number corresponding to the role: ");
+        Scanner sc = new Scanner(java.lang.System.in);
+        java.lang.System.out.println("Select Role to View:");
+        java.lang.System.out.println("1. Doctor");
+        java.lang.System.out.println("2. Pharmacist");
+        java.lang.System.out.println("3. Administrator");
+        java.lang.System.out.print("Enter the number corresponding to the role: ");
         
         int choice = sc.nextInt();
         sc.nextLine();
 
         switch (choice) {
             case 1:
-                System.out.printf("%-5s %-15s %-20s %-15s %-10s %-5s%n", "No.", "Hospital ID", "Name", "Role", "Gender", "Age");
-                System.out.println("-----------------------------------------------------------------------");
+                java.lang.System.out.printf("%-5s %-15s %-20s %-15s %-10s %-5s%n", "No.", "Hospital ID", "Name", "Role", "Gender", "Age");
+                java.lang.System.out.println("-----------------------------------------------------------------------");
                 List<User> doctors = doctorContainer.getAllDoctors().values().stream().toList();
                 for (int i = 0; i < doctors.size(); i++) {
                     Doctor doctor = (Doctor) doctors.get(i);
-                    System.out.printf("%-5d %-15s %-20s %-15s %-10s %-5d%n", (i + 1), doctor.getHospitalId(), doctor.getName(), "Doctor", doctor.getGender(), doctor.getAge());
+                    java.lang.System.out.printf("%-5d %-15s %-20s %-15s %-10s %-5d%n", (i + 1), doctor.getHospitalId(), doctor.getName(), "Doctor", doctor.getGender(), doctor.getAge());
                 }
                 break;
             case 2:
-                System.out.printf("%-5s %-15s %-20s %-15s %-10s %-5s%n", "No.", "Hospital ID", "Name", "Role", "Gender", "Age");
-                System.out.println("-----------------------------------------------------------------------");
+                java.lang.System.out.printf("%-5s %-15s %-20s %-15s %-10s %-5s%n", "No.", "Hospital ID", "Name", "Role", "Gender", "Age");
+                java.lang.System.out.println("-----------------------------------------------------------------------");
                 List<User> pharmacists = pharmacistContainer.getAllPharmacists().values().stream().toList();
                 for (int i = 0; i < pharmacists.size(); i++) {
                     Pharmacist pharmacist = (Pharmacist) pharmacists.get(i);
-                    System.out.printf("%-5d %-15s %-20s %-15s %-10s %-5d%n", (i + 1), pharmacist.getHospitalId(), pharmacist.getName(), "Pharmacist", pharmacist.getGender(), pharmacist.getAge());
+                    java.lang.System.out.printf("%-5d %-15s %-20s %-15s %-10s %-5d%n", (i + 1), pharmacist.getHospitalId(), pharmacist.getName(), "Pharmacist", pharmacist.getGender(), pharmacist.getAge());
                 }
                 break;
             case 3:
-                System.out.printf("%-5s %-15s %-20s %-15s %-10s %-5s%n", "No.", "Hospital ID", "Name", "Role", "Gender", "Age");
-                System.out.println("-----------------------------------------------------------------------");
+                java.lang.System.out.printf("%-5s %-15s %-20s %-15s %-10s %-5s%n", "No.", "Hospital ID", "Name", "Role", "Gender", "Age");
+                java.lang.System.out.println("-----------------------------------------------------------------------");
                 List<User> admins = administratorContainer.getAllAdministrators().values().stream().toList();
                 for (int i = 0; i < admins.size(); i++) {
                     Administrator admin = (Administrator) admins.get(i);
-                    System.out.printf("%-5d %-15s %-20s %-15s %-10s %-5d%n", (i + 1), admin.getHospitalId(), admin.getName(), "Administrator", admin.getGender(), admin.getAge());
+                    java.lang.System.out.printf("%-5d %-15s %-20s %-15s %-10s %-5d%n", (i + 1), admin.getHospitalId(), admin.getName(), "Administrator", admin.getGender(), admin.getAge());
                 }
                 break;
             default:
-                System.out.println("Invalid choice. Returning to previous menu.");
+                java.lang.System.out.println("Invalid choice. Returning to previous menu.");
                 return;
         }
     }
@@ -824,26 +821,26 @@ public class AdministratorMenu extends Menu {
      * Displays all staff members without any filters.
      */
     public void noFilterView(){
-        System.out.println("All Staff:");
-        System.out.printf("%-5s %-15s %-20s %-15s %-10s %-5s%n", "No.", "Hospital ID", "Name", "Role", "Gender", "Age");
-        System.out.println("-----------------------------------------------------------------------");
+        java.lang.System.out.println("All Staff:");
+        java.lang.System.out.printf("%-5s %-15s %-20s %-15s %-10s %-5s%n", "No.", "Hospital ID", "Name", "Role", "Gender", "Age");
+        java.lang.System.out.println("-----------------------------------------------------------------------");
         // Display Doctors
         List<User> doctors = doctorContainer.getAllDoctors().values().stream().toList();
         for (int i = 0; i < doctors.size(); i++) {
             Doctor doctor = (Doctor) doctors.get(i);
-            System.out.printf("%-5d %-15s %-20s %-15s %-10s %-5d%n", (i + 1), doctor.getHospitalId(), doctor.getName(), "Doctor", doctor.getGender(), doctor.getAge());
+            java.lang.System.out.printf("%-5d %-15s %-20s %-15s %-10s %-5d%n", (i + 1), doctor.getHospitalId(), doctor.getName(), "Doctor", doctor.getGender(), doctor.getAge());
         }
         // Display Pharmacists
         List<User> pharmacists = pharmacistContainer.getAllPharmacists().values().stream().toList();
         for (int i = 0; i < pharmacists.size(); i++) {
             Pharmacist pharmacist = (Pharmacist) pharmacists.get(i);
-            System.out.printf("%-5d %-15s %-20s %-15s %-10s %-5d%n", (i + 1), pharmacist.getHospitalId(), pharmacist.getName(), "Pharmacist", pharmacist.getGender(), pharmacist.getAge());
+            java.lang.System.out.printf("%-5d %-15s %-20s %-15s %-10s %-5d%n", (i + 1), pharmacist.getHospitalId(), pharmacist.getName(), "Pharmacist", pharmacist.getGender(), pharmacist.getAge());
         }
         // Display Administrators
         List<User> admins = administratorContainer.getAllAdministrators().values().stream().toList();
         for (int i = 0; i < admins.size(); i++) {
             Administrator admin = (Administrator) admins.get(i);
-            System.out.printf("%-5d %-15s %-20s %-15s %-10s %-5d%n", (i + 1), admin.getHospitalId(), admin.getName(), "Administrator", admin.getGender(), admin.getAge());
+            java.lang.System.out.printf("%-5d %-15s %-20s %-15s %-10s %-5d%n", (i + 1), admin.getHospitalId(), admin.getName(), "Administrator", admin.getGender(), admin.getAge());
         }
     }
 }

@@ -2,20 +2,20 @@ package App.user;
 
 import java.util.ArrayList;
 
-import App.record.MedicalRecord;
+import App.models.Medical;
 
 /**
  * Represents a patient in the hospital system.
  * 
  * The Patient class extends the User class and includes additional information such as date of birth,
  * phone number, blood type, and a medical record.
- * Each patient has their own unique MedicalRecord which stores diagnoses and treatments.
+ * Each patient has their own unique Medical which stores diagnoses and treatments.
  */
 public class Patient extends User {
     private String dateOfBirth;
     private String phoneNumber;
     private String bloodType;
-    private MedicalRecord medicalRecord; // Each patient has their own MedicalRecord
+    private Medical medicalRecord; // Each patient has their own Medical
 
 
     /**
@@ -52,7 +52,7 @@ public class Patient extends User {
         this.dateOfBirth = dateOfBirth; 
         this.phoneNumber = phoneNumber;
         this.bloodType = bloodType;
-        this.medicalRecord = new MedicalRecord(hospitalId,medicalRecordPath); // Initialize MedicalRecord with patient hospital ID and path to the MedicalRecord CSV
+        this.medicalRecord = new Medical(hospitalId,medicalRecordPath); // Initialize Medical with patient hospital ID and path to the Medical CSV
     }
 
     /**
@@ -115,7 +115,7 @@ public class Patient extends User {
      * 
      * @return The medical record of the patient.
      */
-    public MedicalRecord getMedicalRecord() {
+    public Medical getMedicalRecord() {
         return medicalRecord;
     }
     

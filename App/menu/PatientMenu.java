@@ -2,14 +2,14 @@ package App.menu;
 import java.util.List;
 import java.util.Scanner;
 
-import App.container.data.AppointmentContainer;
-import App.container.data.AppointmentOutcomeRecordContainer;
-import App.container.user.DoctorContainer;
-import App.container.user.PatientContainer;
-import App.record.Appointment;
-import App.record.AppointmentOutcomeRecord;
-import App.record.MedicalRecord;
-import App.record.Prescription;
+import App.system.data.AppointmentSystem;
+import App.system.data.AppointmentOutcomeRecordSystem;
+import App.system.user.DoctorSystem;
+import App.system.user.PatientSystem;
+import App.models.Appointment;
+import App.models.AppointmentOutcome;
+import App.models.Medical;
+import App.models.Prescription;
 import App.user.Doctor;
 import App.user.Patient;
 
@@ -21,9 +21,9 @@ import App.user.Patient;
 public class PatientMenu extends Menu {
     private String patientHospitalId;
     private Patient patient;
-    private DoctorContainer doctorContainer;
-    private AppointmentContainer appointmentContainer;
-    private AppointmentOutcomeRecordContainer appointmentOutcomeRecordContainer;
+    private DoctorSystem doctorContainer;
+    private AppointmentSystem appointmentContainer;
+    private AppointmentOutcomeRecordSystem appointmentOutcomeRecordContainer;
 
     /**
      * Constructor to create a new PatientMenu instance.
@@ -35,8 +35,8 @@ public class PatientMenu extends Menu {
      * @param appointmentOutcomeRecordContainer The container storing appointment outcome records.
      */
     public PatientMenu(
-        String hospitalId ,
-        PatientContainer patientContainer, DoctorContainer doctorContainer, AppointmentContainer appointmentContainer, AppointmentOutcomeRecordContainer appointmentOutcomeRecordContainer) 
+            String hospitalId ,
+            PatientSystem patientContainer, DoctorSystem doctorContainer, AppointmentSystem appointmentContainer, AppointmentOutcomeRecordSystem appointmentOutcomeRecordContainer)
     {
         this.patientHospitalId = hospitalId;
         patient=(Patient)patientContainer.getUserByHospitalId(patientHospitalId);
@@ -54,10 +54,10 @@ public class PatientMenu extends Menu {
             System.out.println("----------------------------------------");
             System.out.println("Patient Menu");
             System.out.println("0. Log out");
-            System.out.println("1. Medical Record");
+            System.out.println("1. Medical BaseModel");
             System.out.println("2. Contact information");
             System.out.println("3. Appointment");
-            System.out.println("4. Appointment Outcome Record");
+            System.out.println("4. Appointment Outcome BaseModel");
             System.out.print("Enter your choice: ");
             choice=sc.nextInt();
             switch (choice) {
@@ -166,13 +166,13 @@ public class PatientMenu extends Menu {
                 }
             }
     
-            // Fetch and display the Appointment Outcome Record
+            // Fetch and display the Appointment Outcome BaseModel
             Appointment selectedAppointment = appointments.get(choice - 1);
-            AppointmentOutcomeRecord outcomeRecord = appointmentOutcomeRecordContainer.getAppointmentOutcomeRecordById(selectedAppointment.getAppointmentIdentifyId());
+            AppointmentOutcome outcomeRecord = appointmentOutcomeRecordContainer.getAppointmentOutcomeRecordById(selectedAppointment.getAppointmentIdentifyId());
     
             if (outcomeRecord != null) {
                 System.out.println("----------------------------------------");
-                System.out.println("\nAppointment Outcome Record completed for the appointment with doctor ID: " + selectedAppointment.getdoctorHospitalId() +
+                System.out.println("\nAppointment Outcome BaseModel completed for the appointment with doctor ID: " + selectedAppointment.getdoctorHospitalId() +
                                    " Name: " + doctorContainer.getDoctorByHospitalId(selectedAppointment.getdoctorHospitalId()).getName() +
                                    " on " + selectedAppointment.getTime());
                 System.out.println("Service Type: " + outcomeRecord.getServiceType());
@@ -496,10 +496,10 @@ public class PatientMenu extends Menu {
         String dateOfBirth = patient.getDateOfBirth();
         String gender = patient.getGender();
         String bloodType = patient.getBloodType();
-        MedicalRecord medicalRecord = patient.getMedicalRecord();
+        Medical medicalRecord = patient.getMedicalRecord();
     
         System.out.println("----------------------------------------");
-        System.out.println("Medical Record of "+name);
+        System.out.println("Medical BaseModel of "+name);
         System.out.println("Patient Id: " + medicalRecord.getPatientHospitalId());
         System.out.println("Name: " + name);
         System.out.println("Date of Birth: " + dateOfBirth);

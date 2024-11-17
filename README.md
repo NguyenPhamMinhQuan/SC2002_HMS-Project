@@ -29,7 +29,7 @@ The project follows a modular structure to separate concerns:
 - `Main.java`: Entry point of the application.
 - `menu` folder: Contains classes to manage user menus for each role (e.g., DoctorMenu, PatientMenu).
 - `user` folder: Classes representing different user roles like Doctor, Patient, and Administrator.
-- `record` folder: Handles medical records, appointment records, and prescriptions.
+- `baseModel` folder: Handles medical records, appointment records, and prescriptions.
 - `container` folder: Manages data containers for users and records (e.g., PatientContainer, AppointmentContainer).
 - `data` folder: Contains all the CSV data files required for the project. These files are loaded at runtime to simulate real hospital data, and any updates to the system are saved back into the CSV files upon exit.
 

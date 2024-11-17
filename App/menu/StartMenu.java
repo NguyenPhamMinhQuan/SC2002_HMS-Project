@@ -4,44 +4,40 @@ import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import App.container.Container;
-import App.container.data.AppointmentContainer;
-import App.container.data.AppointmentOutcomeRecordContainer;
-import App.container.data.MedicineContainer;
-import App.container.data.ReplenishmentRequestContainer;
-import App.container.user.AdministratorContainer;
-import App.container.user.DoctorContainer;
-import App.container.user.PatientContainer;
-import App.container.user.PharmacistContainer;
-import App.container.user.UserContainer;
+import App.system.System;
+import App.system.data.*;
+import App.system.data.AppointmentSystem;
+import App.system.data.MedicineSystem;
+import App.system.user.*;
+import App.system.user.UserSystem;
 
 /**
  * The StartMenu class represents the main entry point for users accessing the hospital management system.
  * It provides options to log in as different types of users or to quit the application.
  */
 public class StartMenu extends Menu {
-    HashMap<String,Container> containers;
+    HashMap<String, System> containers;
 
     /**
      * Constructs a StartMenu instance with the specified containers.
      *
      * @param containers The HashMap of containers representing various user and data storage containers.
      */
-    public StartMenu(HashMap<String,Container> containers) {
+    public StartMenu(HashMap<String, System> containers) {
         this.containers=containers;
     }
     @Override
 public void run() {
-    Scanner sc = new Scanner(System.in);
+    Scanner sc = new Scanner(java.lang.System.in);
     
     int choice;
     do {
-        System.out.println("Welcome to the HMS App");
-        System.out.println("----------------------------------------");
-        System.out.println("Hospital Start Menu");
-        System.out.println("0. Quit");
-        System.out.println("1. Log in");
-        System.out.print("Enter your choice: ");
+        java.lang.System.out.println("Welcome to the HMS App");
+        java.lang.System.out.println("----------------------------------------");
+        java.lang.System.out.println("Hospital Start Menu");
+        java.lang.System.out.println("0. Quit");
+        java.lang.System.out.println("1. Log in");
+        java.lang.System.out.print("Enter your choice: ");
         
         // Use try-catch to handle invalid input
         try {
@@ -49,29 +45,29 @@ public void run() {
             
             switch (choice) {
                 case 0:
-                    System.out.println("Quitting...");
+                    java.lang.System.out.println("Quitting...");
                     break;
                 case 1:
-                    System.out.print("Enter hospital ID: ");
+                    java.lang.System.out.print("Enter hospital ID: ");
                     String hospitalId = sc.next();
-                    System.out.print("Enter password: ");
+                    java.lang.System.out.print("Enter password: ");
                     String password = sc.next();
                     Menu userMenu = createUserMenu(hospitalId, password);
                     if (userMenu != null) {
                         userMenu.run();
                     } else {
-                        System.out.println("Wrong hospital ID or wrong password");
+                        java.lang.System.out.println("Wrong hospital ID or wrong password");
                     }
                     break;
                 default:
-                    System.out.println("Invalid choice");
+                    java.lang.System.out.println("Invalid choice");
             }
         } catch (InputMismatchException e) {
-            System.out.println("Invalid answer! Please enter a number.");
+            java.lang.System.out.println("Invalid answer! Please enter a number.");
             sc.nextLine(); // Clear the invalid input from the scanner buffer
             choice = -1; // Set choice to a non-exiting value to continue the loop
         }
-        System.out.println("---------Thank you for using HMS----------\n\n\n\n");
+        java.lang.System.out.println("---------Thank you for using HMS----------\n\n\n\n");
     } while (choice != 0);
     
 }
@@ -84,14 +80,14 @@ public void run() {
      * @return A Menu object for the logged-in user, or null if the login fails.
      */
     public Menu createUserMenu(String hospitalId,String password) {
-        PatientContainer patientContainer = (PatientContainer)(containers.get("Patient"));
-        DoctorContainer doctorContainer = (DoctorContainer)(containers.get("Doctor"));
-        PharmacistContainer pharmacistContainer = (PharmacistContainer)(containers.get("Pharmacist"));
-        AdministratorContainer administratorContainer = (AdministratorContainer)(containers.get("Administrator"));
-        AppointmentContainer appointmentContainer = (AppointmentContainer)(containers.get("Appointment"));
-        AppointmentOutcomeRecordContainer appointmentOutcomeRecordContainer = (AppointmentOutcomeRecordContainer)(containers.get("AppointmentOutcomeRecord"));
-        MedicineContainer medicineContainer = (MedicineContainer)(containers.get("Medicine"));
-        ReplenishmentRequestContainer replenishmentRequestContainer = (ReplenishmentRequestContainer)(containers.get("ReplenishmentRequest"));
+        PatientSystem patientContainer = (PatientSystem)(containers.get("Patient"));
+        DoctorSystem doctorContainer = (DoctorSystem)(containers.get("Doctor"));
+        PharmacistSystem pharmacistContainer = (PharmacistSystem)(containers.get("Pharmacist"));
+        AdministratorSystem administratorContainer = (AdministratorSystem)(containers.get("Administrator"));
+        AppointmentSystem appointmentContainer = (AppointmentSystem)(containers.get("Appointment"));
+        AppointmentOutcomeRecordSystem appointmentOutcomeRecordContainer = (AppointmentOutcomeRecordSystem)(containers.get("AppointmentOutcome"));
+        MedicineSystem medicineContainer = (MedicineSystem)(containers.get("Medicine"));
+        ReplenishmentRequestSystem replenishmentRequestContainer = (ReplenishmentRequestSystem)(containers.get("StockReplenishmentRequest"));
 
         /*//put some sample appointments for testing
         appointmentContainer.addAppointment("2021-10-01 10:00", "P1001", "D001");
@@ -168,30 +164,30 @@ public void run() {
      * @param userContainer The container storing user information.
      * @param hospitalId    The hospital ID of the user.
      */
-    private void promptPasswordChange(UserContainer userContainer, String hospitalId) {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("You are using the default password. Please change it for security.");
+    private void promptPasswordChange(UserSystem userContainer, String hospitalId) {
+        Scanner sc = new Scanner(java.lang.System.in);
+        java.lang.System.out.println("You are using the default password. Please change it for security.");
         String newPassword;
     
         while (true) {
-            System.out.print("Enter new password: ");
+            java.lang.System.out.print("Enter new password: ");
             newPassword = sc.nextLine();
     
             // Check if the new password meets complexity requirements
             if (!isPasswordComplex(newPassword)) {
-                System.out.println("Password must be 6-20 characters and contain at least one digit, one lowercase, and one uppercase letter.");
+                java.lang.System.out.println("Password must be 6-20 characters and contain at least one digit, one lowercase, and one uppercase letter.");
                 continue;
             }
     
-            System.out.print("Confirm new password: ");
+            java.lang.System.out.print("Confirm new password: ");
             String confirmPassword = sc.nextLine();
     
             if (newPassword.equals(confirmPassword)) {
                 userContainer.getUserByHospitalId(hospitalId).setPassword(newPassword);
-                System.out.println("Password changed successfully.");
+                java.lang.System.out.println("Password changed successfully.");
                 break;
             } else {
-                System.out.println("Passwords do not match. Please try again.");
+                java.lang.System.out.println("Passwords do not match. Please try again.");
             }
         }
     }

@@ -3,12 +3,12 @@ package App.menu;
 import java.util.List;
 import java.util.Scanner;
 
-import App.container.data.AppointmentOutcomeRecordContainer;
-import App.container.data.MedicineContainer;
-import App.container.data.ReplenishmentRequestContainer;
-import App.record.AppointmentOutcomeRecord;
-import App.record.Medicine;
-import App.record.Prescription;
+import App.models.AppointmentOutcome;
+import App.system.data.AppointmentOutcomeRecordSystem;
+import App.system.data.MedicineSystem;
+import App.system.data.ReplenishmentRequestSystem;
+import App.models.Medicine;
+import App.models.Prescription;
 
 
 /**
@@ -17,9 +17,9 @@ import App.record.Prescription;
  */
 public class PharmacistMenu extends Menu {
     private String pharmacistHospitalId;
-    private AppointmentOutcomeRecordContainer appointmentOutcomeRecordContainer;
-    private MedicineContainer medicineContainer;
-    private ReplenishmentRequestContainer ReplenishmentRequestContainer;
+    private AppointmentOutcomeRecordSystem appointmentOutcomeRecordContainer;
+    private MedicineSystem medicineContainer;
+    private ReplenishmentRequestSystem ReplenishmentRequestContainer;
 
     /**
      * Constructor to create a new PharmacistMenu instance.
@@ -29,7 +29,7 @@ public class PharmacistMenu extends Menu {
      * @param medicineContainer              The container storing medicine inventory data.
      * @param ReplenishmentRequestContainer  The container storing replenishment requests.
      */
-    public PharmacistMenu(String pharmacistHospitalId , AppointmentOutcomeRecordContainer appointmentOutcomeRecordContainer, MedicineContainer medicineContainer, ReplenishmentRequestContainer ReplenishmentRequestContainer) {
+    public PharmacistMenu(String pharmacistHospitalId , AppointmentOutcomeRecordSystem appointmentOutcomeRecordContainer, MedicineSystem medicineContainer, ReplenishmentRequestSystem ReplenishmentRequestContainer) {
         super();
         this.pharmacistHospitalId=pharmacistHospitalId;
         this.appointmentOutcomeRecordContainer=appointmentOutcomeRecordContainer;
@@ -75,13 +75,13 @@ public class PharmacistMenu extends Menu {
         System.out.println("--------------------------------------------------------------------------------");
 
         // Retrieve all AppointmentOutcomeRecords
-        List<AppointmentOutcomeRecord> records = appointmentOutcomeRecordContainer.getAllAppointmentOutcomeRecords();
+        List<AppointmentOutcome> records = appointmentOutcomeRecordContainer.getAllAppointmentOutcomeRecords();
 
         if (records.isEmpty()) {
             System.out.println("No appointment outcome records found.");
         } else {
             for (int i = 0; i < records.size(); i++) {
-                AppointmentOutcomeRecord record = records.get(i);
+                AppointmentOutcome record = records.get(i);
                 System.out.printf("%-5d %-30s %-20s %-20s %-20s%n", 
                     (i + 1), 
                     record.getAppointmentRecordId(), 
@@ -93,7 +93,7 @@ public class PharmacistMenu extends Menu {
 
             // Prompt to select a record by number
             System.out.println("----------------------------------------");
-            System.out.print("Enter the number of the Appointment Outcome Record to view prescriptions (or 0 to go back): ");
+            System.out.print("Enter the number of the Appointment Outcome BaseModel to view prescriptions (or 0 to go back): ");
             
             int choice;
             while (true) {
@@ -117,8 +117,8 @@ public class PharmacistMenu extends Menu {
                 return;
             }
 
-            // Display prescriptions for the selected AppointmentOutcomeRecord
-            AppointmentOutcomeRecord selectedRecord = records.get(choice - 1);
+            // Display prescriptions for the selected AppointmentOutcome
+            AppointmentOutcome selectedRecord = records.get(choice - 1);
             System.out.println("Prescriptions for Appointment ID: " + selectedRecord.getAppointmentRecordId());
             System.out.printf("%-5s %-20s %-10s %-10s%n", "No.", "Medicine Name", "Amount", "Status");
             System.out.println("----------------------------------------------------");
