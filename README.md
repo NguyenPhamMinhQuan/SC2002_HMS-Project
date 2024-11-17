@@ -37,7 +37,7 @@ The project follows a modular structure to separate concerns:
 1. **Download all the folders including `App` and `data` folder**:
    Download all the relevant folders from the current github repository and place them in a single folder.
 
-2.**Navigate to the outer folder**:
+2. **Navigate to the outer folder**:
    Open a terminal (or command prompt) and change the directory to where the `App` folder is located.
    For example, if the `App` and `data` folders are placed in a folder named `Project`, navigate to the `Project` folder
    
@@ -45,7 +45,7 @@ The project follows a modular structure to separate concerns:
    cd path/to/Project
    ```
 
-3.**Compile the source code**:
+3. **Compile the source code**:
    Run the following command to compile all the `.java` files in the `App` folder:
    
    ```bash
