@@ -3,42 +3,42 @@ package App.menu;
 import java.util.List;
 import java.util.Scanner;
 
-import App.container.data.AppointmentContainer;
-import App.container.data.AppointmentOutcomeRecordContainer;
-import App.container.data.MedicineContainer;
-import App.container.user.DoctorContainer;
-import App.container.user.PatientContainer;
-import App.record.Appointment;
-import App.record.AppointmentOutcomeRecord;
-import App.record.Medicine;
-import App.record.Prescription;
+import App.system.data.AppointmentOutcomeRecordSystem;
+import App.system.data.AppointmentSystem;
+import App.system.data.MedicineSystem;
+import App.system.user.DoctorSystem;
+import App.system.user.PatientSystem;
+import App.models.Appointment;
+import App.models.AppointmentOutcome;
+import App.models.Medicine;
+import App.models.Prescription;
 import App.user.Doctor;
 
 /**
  * The DoctorMenu class provides a menu interface for a doctor to interact with the system.
- * It includes functions for managing appointments, setting availability, managing patient records, 
+ * It includes functions for managing appointments, setting availability, managing patient records,
  * and viewing medical history.
  */
 public class DoctorMenu extends Menu {
-    private String doctorHospitalId;
-    private Doctor doctor;
-    private PatientContainer patientContainer;
-    private AppointmentContainer appointmentContainer;
-    private AppointmentOutcomeRecordContainer appointmentOutcomeRecordContainer;
-    private MedicineContainer medicineContainer;
+    private final String doctorHospitalId;
+    private final Doctor doctor;
+    private final PatientSystem patientContainer;
+    private final AppointmentSystem appointmentContainer;
+    private final AppointmentOutcomeRecordSystem appointmentOutcomeRecordContainer;
+    private final MedicineSystem medicineContainer;
 
 
     /**
      * Constructs a DoctorMenu for the specified doctor.
      *
-     * @param hospitalId The hospital ID of the doctor.
-     * @param doctorContainer The container holding doctor information.
-     * @param patientContainer The container holding patient information.
-     * @param appointmentContainer The container holding appointment information.
+     * @param hospitalId                        The hospital ID of the doctor.
+     * @param doctorContainer                   The container holding doctor information.
+     * @param patientContainer                  The container holding patient information.
+     * @param appointmentContainer              The container holding appointment information.
      * @param appointmentOutcomeRecordContainer The container holding appointment outcome records.
-     * @param medicineContainer The container holding medicine information.
+     * @param medicineContainer                 The container holding medicine information.
      */
-    public DoctorMenu(String hospitalId, DoctorContainer doctorContainer, PatientContainer patientContainer, AppointmentContainer appointmentContainer, AppointmentOutcomeRecordContainer appointmentOutcomeRecordContainer, MedicineContainer medicineContainer) {
+    public DoctorMenu(String hospitalId, DoctorSystem doctorContainer, PatientSystem patientContainer, AppointmentSystem appointmentContainer, AppointmentOutcomeRecordSystem appointmentOutcomeRecordContainer, MedicineSystem medicineContainer) {
         this.doctorHospitalId = hospitalId;
         doctor = (Doctor) doctorContainer.getUserByHospitalId(doctorHospitalId);//here dont need this keyword because the parameter name is different
         this.patientContainer = patientContainer;
@@ -46,7 +46,7 @@ public class DoctorMenu extends Menu {
         this.appointmentOutcomeRecordContainer = appointmentOutcomeRecordContainer;
         this.medicineContainer = medicineContainer;
     }
-   
+
     /**
      * Runs the doctor menu interface, allowing interaction through the console.
      */
@@ -65,7 +65,7 @@ public class DoctorMenu extends Menu {
         doctor.addAvailableSlot("2024-11-19 15:00");
         doctor.addAvailableSlot("2024-11-19 16:00");*/
 
-        Scanner sc=new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
         int choice;
         do {
             System.out.println("----------------------------------------");
@@ -77,22 +77,27 @@ public class DoctorMenu extends Menu {
             System.out.println("4. Add a new patient to my care");
 
             System.out.print("Enter your choice: ");
-            choice=sc.nextInt();
+            choice = sc.nextInt();
             switch (choice) {
                 case 0:
-                    System.out.println("Logging out..."); break;
+                    System.out.println("Logging out...");
+                    break;
                 case 1:
-                    MedicalRecord(); break;
+                    MedicalRecord();
+                    break;
                 case 2:
-                    MyAppointments(); break;
-                case 3: 
-                    setAvailability(); break;
+                    MyAppointments();
+                    break;
+                case 3:
+                    setAvailability();
+                    break;
                 case 4:
-                    addPatientUnderCare(); break;                    
+                    addPatientUnderCare();
+                    break;
                 default:
                     System.out.println("Invalid choice");
             }
-        } while (choice!=0);
+        } while (choice != 0);
     }
 
     /**
@@ -101,7 +106,7 @@ public class DoctorMenu extends Menu {
     private void MyAppointments() {
         Scanner sc = new Scanner(System.in);
         int appointmentChoice;
-    
+
         do {
             System.out.println("----------------------------------------");
             System.out.println("Appointments Menu");
@@ -109,7 +114,7 @@ public class DoctorMenu extends Menu {
             System.out.println("1. View Pending Appointments");
             System.out.println("2. View Confirmed Appointments");
             System.out.println("3. View Completed Appointments");
-    
+
             System.out.print("Enter your choice: ");
             while (!sc.hasNextInt()) {
                 System.out.println("Invalid input! Please enter a number.");
@@ -117,7 +122,7 @@ public class DoctorMenu extends Menu {
             }
             appointmentChoice = sc.nextInt();
             sc.nextLine(); // Clear buffer after reading integer choice
-    
+
             switch (appointmentChoice) {
                 case 0:
                     System.out.println("Returning to main menu...");
@@ -145,9 +150,9 @@ public class DoctorMenu extends Menu {
         System.out.println("Pending Appointments:");
         System.out.printf("%-5s %-15s %-20s %-20s%n", "No.", "Date & Time", "Patient ID", "Status");
         System.out.println("------------------------------------------------------------");
-    
+
         List<Appointment> appointments = appointmentContainer.getAllAppointmentsByDoctorIdAndStatus(doctorHospitalId, "pending");
-    
+
         if (appointments.isEmpty()) {
             System.out.println("No pending appointments found.");
         } else {
@@ -156,7 +161,7 @@ public class DoctorMenu extends Menu {
                 String patientId = appointment.getpatientHospitalId();
                 System.out.printf("%-5d %-15s %-20s %-20s%n", (i + 1), appointment.getTime(), patientId, appointment.getStatus());
             }
-    
+
             // Prompt doctor to select an appointment to confirm or cancel
             System.out.println("----------------------------------------");
             System.out.print("Enter the number of the appointment you want to confirm/cancel (or 0 to go back): ");
@@ -175,21 +180,21 @@ public class DoctorMenu extends Menu {
                     sc.next(); // Clear invalid input
                 }
             }
-    
+
             // If the user wants to go back
             if (choice == 0) {
                 System.out.println("Returning to previous menu...");
                 return;
             }
-    
+
             Appointment selectedAppointment = appointments.get(choice - 1);
             System.out.println("You selected the appointment with Patient ID: " + selectedAppointment.getpatientHospitalId() + "name" + patientContainer.getUserByHospitalId(selectedAppointment.getpatientHospitalId()).getName() + " on " + selectedAppointment.getTime());
             System.out.println("----------------------------------------");
             System.out.println("0. Reject the appointment");
-            System.out.println("1. Confirm the appointment");  
-            System.out.print("Enter your choice: ");          
+            System.out.println("1. Confirm the appointment");
+            System.out.print("Enter your choice: ");
             String action = sc.nextLine().trim().toUpperCase();
-    
+
             if (action.equals("1")) {
                 selectedAppointment.setStatus("confirmed");
                 System.out.println("Appointment confirmed.");
@@ -203,7 +208,7 @@ public class DoctorMenu extends Menu {
             }
         }
     }
-    
+
 
     /**
      * Displays confirmed appointments of the doctor and allows the doctor to complete the appointments.
@@ -213,9 +218,9 @@ public class DoctorMenu extends Menu {
         System.out.println("Confirmed Appointments:");
         System.out.printf("%-5s %-15s %-20s %-20s%n", "No.", "Date & Time", "Patient ID", "Status");
         System.out.println("------------------------------------------------------------");
-    
+
         List<Appointment> appointments = appointmentContainer.getAllAppointmentsByDoctorIdAndStatus(doctorHospitalId, "confirmed");
-    
+
         if (appointments.isEmpty()) {
             System.out.println("No confirmed appointments found.");
         } else {
@@ -225,7 +230,7 @@ public class DoctorMenu extends Menu {
                 String patientName = patientContainer.getUserByHospitalId(patientId).getName();
                 System.out.printf("%-5d %-15s %-20s %-20s%n", (i + 1), appointment.getTime(), patientId + " (" + patientName + ")", appointment.getStatus());
             }
-    
+
             // Prompt doctor to select an appointment to mark as completed
             System.out.println("----------------------------------------");
             System.out.print("Enter the number of the appointment you complete (or 0 to go back): ");
@@ -244,48 +249,48 @@ public class DoctorMenu extends Menu {
                     sc.next(); // Clear invalid input
                 }
             }
-    
+
             // If the user wants to go back
             if (choice == 0) {
                 System.out.println("Returning to previous menu...");
                 return;
             }
-    
+
             // Mark the selected appointment as completed
             Appointment selectedAppointment = appointments.get(choice - 1);
             System.out.println("You selected the appointment with Patient ID: " + selectedAppointment.getpatientHospitalId() + " Name: " + patientContainer.getUserByHospitalId(selectedAppointment.getpatientHospitalId()).getName() + " on " + selectedAppointment.getTime());
             System.out.println("----------------------------------------");
-            System.out.println("0. Complete the appointment and fill in Appointment Outcome Record");  
-            System.out.print("Enter your choice: ");          
+            System.out.println("0. Complete the appointment and fill in Appointment Outcome BaseModel");
+            System.out.print("Enter your choice: ");
             String action = sc.nextLine().trim().toUpperCase();
-    
+
             if (action.equals("0")) {
                 selectedAppointment.setStatus("completed");
                 System.out.println("Appointment completed.");
                 System.out.println("----------------------------------------");
 
-                // Prompt to fill in AppointmentOutcomeRecord
-                System.out.println("Fill in the Appointment Outcome Record:");
+                // Prompt to fill in AppointmentOutcome
+                System.out.println("Fill in the Appointment Outcome BaseModel:");
                 System.out.print("Enter service type: ");
                 String serviceType = sc.nextLine();
                 System.out.print("Enter consultation notes: ");
                 String consultationNotes = sc.nextLine();
-            
-                // Create and add AppointmentOutcomeRecord
+
+                // Create and add AppointmentOutcome
                 appointmentOutcomeRecordContainer.addAppointmentOutcomeRecord(selectedAppointment, serviceType, consultationNotes);
-                
+
                 System.out.println("----------------------------------------");
 
                 // Ask if the doctor wants to add any prescriptions
                 System.out.println("Would you like to add any prescriptions for this appointment?");
                 System.out.println("0. No");
-                System.out.println("1. Yes");  
-                System.out.print("Enter your choice: ");   
+                System.out.println("1. Yes");
+                System.out.print("Enter your choice: ");
                 String addPrescriptions = sc.nextLine().trim().toLowerCase();
-            
+
                 if (addPrescriptions.equals("1")) {
                     System.out.println("Add prescriptions for the appointment:");
-            
+
                     String addMore;
                     do {
                         // Display all available medicines with numbers for selection
@@ -301,7 +306,7 @@ public class DoctorMenu extends Menu {
 
                         System.out.println("----------------------------------------");
                         System.out.print("Enter the number of the medicine you want to prescribe (or 0 to go back): ");
-                        
+
                         int medicineChoice;
                         while (true) {
                             if (sc.hasNextInt()) {
@@ -350,14 +355,14 @@ public class DoctorMenu extends Menu {
                 }
                 System.out.println("You selected the appointment with Patient ID: " + selectedAppointment.getpatientHospitalId() + " Name: " + patientContainer.getUserByHospitalId(selectedAppointment.getpatientHospitalId()).getName() + " on " + selectedAppointment.getTime());
 
-                System.out.println("Appointment Outcome Record completed for the appointment with Patient ID: " + selectedAppointment.getpatientHospitalId() + " Name: " + patientContainer.getUserByHospitalId(selectedAppointment.getpatientHospitalId()).getName() + " on " + selectedAppointment.getTime());
+                System.out.println("Appointment Outcome BaseModel completed for the appointment with Patient ID: " + selectedAppointment.getpatientHospitalId() + " Name: " + patientContainer.getUserByHospitalId(selectedAppointment.getpatientHospitalId()).getName() + " on " + selectedAppointment.getTime());
             } else {
                 System.out.println("Invalid choice.");
             }
-            
+
         }
     }
-    
+
 
     /**
      * Displays completed appointments and allows the doctor to view outcome records.
@@ -401,13 +406,13 @@ public class DoctorMenu extends Menu {
                 }
             }
 
-            // Fetch and display the Appointment Outcome Record
+            // Fetch and display the Appointment Outcome BaseModel
             Appointment selectedAppointment = appointments.get(choice - 1);
-            AppointmentOutcomeRecord outcomeRecord = appointmentOutcomeRecordContainer.getAppointmentOutcomeRecordById(selectedAppointment.getAppointmentIdentifyId());
+            AppointmentOutcome outcomeRecord = appointmentOutcomeRecordContainer.getAppointmentOutcomeRecordById(selectedAppointment.getAppointmentIdentifyId());
 
             if (outcomeRecord != null) {
                 System.out.println("----------------------------------------");
-                System.out.println("\nAppointment Outcome Record completed for the appointment with Patient ID: " + selectedAppointment.getpatientHospitalId() + " Name: " + patientContainer.getUserByHospitalId(selectedAppointment.getpatientHospitalId()).getName() + " on " + selectedAppointment.getTime());
+                System.out.println("\nAppointment Outcome BaseModel completed for the appointment with Patient ID: " + selectedAppointment.getpatientHospitalId() + " Name: " + patientContainer.getUserByHospitalId(selectedAppointment.getpatientHospitalId()).getName() + " on " + selectedAppointment.getTime());
                 System.out.println("Service Type: " + outcomeRecord.getServiceType());
                 System.out.println("Consultation Notes: " + outcomeRecord.getConsultationNotes());
                 System.out.println("\nPrescriptions:");
@@ -439,9 +444,9 @@ public class DoctorMenu extends Menu {
             System.out.println("0. Back");
             System.out.println("1. Add Available Slot");
             System.out.println("2. View Available Slots");
-    
+
             System.out.print("Enter your choice: ");
-            
+
             // Validate that the input is an integer
             while (!sc.hasNextInt()) {
                 System.out.println("Invalid input! Please enter a number.");
@@ -449,7 +454,7 @@ public class DoctorMenu extends Menu {
             }
             setAvailabilityChoice = sc.nextInt();
             sc.nextLine(); // Clear buffer after reading integer choice
-    
+
             switch (setAvailabilityChoice) {
                 case 0:
                     System.out.println("Logging out...");
@@ -457,7 +462,7 @@ public class DoctorMenu extends Menu {
                 case 1:
                     System.out.print("Enter available slot (YYYY-MM-DD HH:MM): ");
                     String slot = sc.nextLine(); // Use nextLine to capture the full slot input
-                    if (App.container.data.AppointmentContainer.isValidDateTime(slot)) {
+                    if (AppointmentSystem.isValidDateTime(slot)) {
                         doctor.addAvailableSlot(slot);
                         System.out.println("Slot added successfully. :)");
                     } else {
@@ -475,7 +480,7 @@ public class DoctorMenu extends Menu {
             }
         } while (setAvailabilityChoice != 0);
     }
-    
+
 
     /**
      * Displays the medical records of patients under the care of the doctor.
@@ -486,24 +491,27 @@ public class DoctorMenu extends Menu {
         int medicalRecordChoice;
         do {
             System.out.println("----------------------------------------");
-            System.out.println("Medical Record Menu");
+            System.out.println("Medical BaseModel Menu");
             System.out.println("0. Back");
-            System.out.println("1. View Medical Record");
-            System.out.println("2. Edit Medical Record");
+            System.out.println("1. View Medical BaseModel");
+            System.out.println("2. Edit Medical BaseModel");
 
             System.out.print("Enter your choice: ");
-            medicalRecordChoice=sc.nextInt();
+            medicalRecordChoice = sc.nextInt();
             switch (medicalRecordChoice) {
                 case 0:
-                    System.out.println("Logging out..."); break;
+                    System.out.println("Logging out...");
+                    break;
                 case 1:
-                    viewMedicalRecord(); break;
+                    viewMedicalRecord();
+                    break;
                 case 2:
-                    editMedicalRecord(); break;
+                    editMedicalRecord();
+                    break;
                 default:
                     System.out.println("Invalid choice");
             }
-        } while (medicalRecordChoice!=0);
+        } while (medicalRecordChoice != 0);
     }
 
     /**
@@ -513,7 +521,7 @@ public class DoctorMenu extends Menu {
         System.out.println("Patients Under Your Care:");
         System.out.printf("%-15s %-20s %-15s %-10s %-5s %-30s%n", "Hospital ID", "Patient Name", "Date of Birth", "Gender", "Blood type", "Email");
         System.out.println("---------------------------------------------------------------------------------------------------------");
-    
+
         // Print each patient's hospital ID and name
         doctor.getAllPatientsUnderCare().forEach((patientHospitalId) -> {
             String patientName = patientContainer.getUserByHospitalId(patientHospitalId).getName();
@@ -543,16 +551,16 @@ public class DoctorMenu extends Menu {
         System.out.print("Enter patient hospital ID that you want to edit: ");
         String patientHospitalId = scMedical.next();
         scMedical.nextLine(); // Clear buffer after reading hospital ID
-    
+
         if (doctor.getAllPatientsUnderCare().contains(patientHospitalId)) {
             int editMedicalRecordChoice;
             do {
                 System.out.println("----------------------------------------");
-                System.out.println("Edit Medical Record of " + patientContainer.getUserByHospitalId(patientHospitalId).getName() + " (" + patientHospitalId + ")");
+                System.out.println("Edit Medical BaseModel of " + patientContainer.getUserByHospitalId(patientHospitalId).getName() + " (" + patientHospitalId + ")");
                 System.out.println("0. Back");
                 System.out.println("1. Add Diagnosis");
                 System.out.println("2. Add Treatment");
-    
+
                 System.out.print("Enter your choice: ");
                 while (!scMedical.hasNextInt()) {  // Check for integer input
                     System.out.println("Invalid input! Please enter a number.");
@@ -560,7 +568,7 @@ public class DoctorMenu extends Menu {
                 }
                 editMedicalRecordChoice = scMedical.nextInt();
                 scMedical.nextLine(); // Clear buffer after reading integer choice
-    
+
                 switch (editMedicalRecordChoice) {
                     case 0:
                         System.out.println("Logging out...");
@@ -598,11 +606,10 @@ public class DoctorMenu extends Menu {
             //first check if the patient is already under the care of this doctor
             if (doctor.getAllPatientsUnderCare().contains(patientHospitalId)) {
                 System.out.println("Patient is already under your care.");
-            }
-            else{
+            } else {
                 doctor.addPatientUnderCare(patientHospitalId);
-                String patientName = patientContainer.getUserByHospitalId(patientHospitalId).getName(); 
-                System.out.println("Patient " + patientName + " added to your care");   
+                String patientName = patientContainer.getUserByHospitalId(patientHospitalId).getName();
+                System.out.println("Patient " + patientName + " added to your care");
             }
         } else {
             System.out.println("Patient not found");

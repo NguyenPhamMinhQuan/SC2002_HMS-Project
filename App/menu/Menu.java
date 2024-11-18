@@ -2,7 +2,7 @@ package App.menu;
 
 /**
  * Abstract class representing a menu in the system.
- * 
+ * <p>
  * Each subclass must implement the run method to provide the menu functionality.
  */
 public abstract class Menu {
