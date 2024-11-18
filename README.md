@@ -80,7 +80,7 @@ To view the Javadocs, open the `index.html` file in the `docs` folder with any b
 ## UML Class Diagram
 
 The UML class diagram illustrates the structure of the Hospital Management System, showing the relationships between different classes implemented.
-![UML Class Diagramt](Class-Diagram.png)
+![UML Class Diagramt](Class%20Diagram.png)
 
 ### Overview
 - **Class relationships**: Shows inheritance, associations, and dependencies.
